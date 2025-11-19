@@ -21,124 +21,88 @@
 </div>
 <!-- End Hero Section -->
 
+
+
 <div class="untree_co-section product-section before-footer-section">
     <div class="container">
-        <div class="row">
-
-            <!-- Start Column 1 -->
-            <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('assets/images/product-3.png') }}" class="img-fluid product-thumbnail" alt="Nordic Chair">
-                    <h3 class="product-title">Nordic Chair</h3>
-                    <strong class="product-price">$50.00</strong>
-
-                    <span class="icon-cross">
-                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
-                    </span>
-                </a>
-            </div> 
-            <!-- End Column 1 -->
-                
-            <!-- Start Column 2 -->
-            <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('assets/images/product-1.png') }}" class="img-fluid product-thumbnail" alt="Nordic Chair">
-                    <h3 class="product-title">Nordic Chair</h3>
-                    <strong class="product-price">$50.00</strong>
-
-                    <span class="icon-cross">
-                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
-                    </span>
-                </a>
-            </div> 
-            <!-- End Column 2 -->
-
-            <!-- Start Column 3 -->
-            <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('assets/images/product-2.png') }}" class="img-fluid product-thumbnail" alt="Kruzo Aero Chair">
-                    <h3 class="product-title">Kruzo Aero Chair</h3>
-                    <strong class="product-price">$78.00</strong>
-
-                    <span class="icon-cross">
-                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
-                    </span>
-                </a>
-            </div>
-            <!-- End Column 3 -->
-
-            <!-- Start Column 4 -->
-            <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('assets/images/product-3.png') }}" class="img-fluid product-thumbnail" alt="Ergonomic Chair">
-                    <h3 class="product-title">Ergonomic Chair</h3>
-                    <strong class="product-price">$43.00</strong>
-
-                    <span class="icon-cross">
-                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
-                    </span>
-                </a>
-            </div>
-            <!-- End Column 4 -->
-
-            <!-- Start Column 5 -->
-            <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('assets/images/product-3.png') }}" class="img-fluid product-thumbnail" alt="Nordic Chair">
-                    <h3 class="product-title">Nordic Chair</h3>
-                    <strong class="product-price">$50.00</strong>
-
-                    <span class="icon-cross">
-                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
-                    </span>
-                </a>
-            </div> 
-            <!-- End Column 5 -->
-                
-            <!-- Start Column 6 -->
-            <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('assets/images/product-1.png') }}" class="img-fluid product-thumbnail" alt="Nordic Chair">
-                    <h3 class="product-title">Nordic Chair</h3>
-                    <strong class="product-price">$50.00</strong>
-
-                    <span class="icon-cross">
-                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
-                    </span>
-                </a>
-            </div> 
-            <!-- End Column 6 -->
-
-            <!-- Start Column 7 -->
-            <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('assets/images/product-2.png') }}" class="img-fluid product-thumbnail" alt="Kruzo Aero Chair">
-                    <h3 class="product-title">Kruzo Aero Chair</h3>
-                    <strong class="product-price">$78.00</strong>
-
-                    <span class="icon-cross">
-                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
-                    </span>
-                </a>
-            </div>
-            <!-- End Column 7 -->
-
-            <!-- Start Column 8 -->
-            <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
-                    <img src="{{ asset('assets/images/product-3.png') }}" class="img-fluid product-thumbnail" alt="Ergonomic Chair">
-                    <h3 class="product-title">Ergonomic Chair</h3>
-                    <strong class="product-price">$43.00</strong>
-
-                    <span class="icon-cross">
-                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
-                    </span>
-                </a>
-            </div>
-            <!-- End Column 8 -->
-
+        <div class="row" id="product-list">
+            <!-- Les produits seront injectés ici via AJAX -->
         </div>
     </div>
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('product-list');
+
+    const params = new URLSearchParams(window.location.search);
+    const categoryId = params.get('category_id');
+
+    loadProducts(categoryId);
+
+    async function loadProducts(categoryId) {
+        const url = categoryId
+            ? `/api/v1/products?category_id=${encodeURIComponent(categoryId)}`
+            : `/api/v1/products`;
+
+        container.innerHTML = '<div class="col-12 text-center py-5">Chargement des produits...</div>';
+
+        try {
+            const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+            const json = await res.json();
+
+            if (!json.success) {
+                throw new Error(json.message || 'Erreur lors de la récupération des produits.');
+            }
+
+            const products = json.data || [];
+
+            if (!products.length) {
+                container.innerHTML = '<div class="col-12 text-center py-5">Aucun produit trouvé pour cette catégorie.</div>';
+                return;
+            }
+
+            container.innerHTML = products.map(p => renderProductCard(p)).join('');
+        } catch (e) {
+            container.innerHTML = `<div class="col-12 text-center text-danger py-5">Erreur: ${e.message}</div>`;
+        }
+    }
+
+    function renderProductCard(p) {
+        // Fallback image si non défini
+        const defaultImage = '{{ asset('assets/images/product-3.png') }}';
+        const imgSrc = (p.image_path && typeof p.image_path === 'string') ? p.image_path : defaultImage;
+
+        return `
+            <div class="col-12 col-md-4 col-lg-3 mb-5">
+                <a class="product-item" href="#">
+                    <img src="${defaultImage}" class="img-fluid product-thumbnail" alt="${escapeHtml(p.name || 'Produit')}">
+                    <h3 class="product-title">${escapeHtml(p.name || '')}</h3>
+                    <strong class="product-price">${formatPrice(p.price)}F CFA</strong>
+                    <span class="icon-cross">
+                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
+                    </span>
+                </a>
+            </div>
+        `;
+    }
+
+    function formatPrice(value) {
+        const num = Number(value);
+        return isNaN(num) ? '0.00' : num.toFixed(2);
+    }
+
+    function escapeHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+});
+</script>
+@endpush

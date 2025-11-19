@@ -23,9 +23,29 @@
                     <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}"
                         href="{{ route('about') }}">About us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}"
-                        href="{{ route('services') }}">Services</a>
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link dropdown-toggle {{ request()->routeIs('services') ? 'active' : '' }}"
+                        href="#"
+                        id="categoriesDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                    >
+                        Catégories
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="categoriesDropdown">
+                        @foreach($categories as $category)
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="{{ route('shop') }}?category_id={{ $category->id }}"
+                                >
+                                    {{ $category->name }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('blog') ? 'active' : '' }}"
@@ -56,5 +76,4 @@
     </div>
 
 </nav>
-
 <!-- End Header/Navigation -->
