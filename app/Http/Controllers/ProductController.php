@@ -28,7 +28,6 @@ class ProductController extends Controller
     public function create()
     {
         $categories = category::orderBy('name')->get(['id', 'name']);
-
         return view('admin.products.create', compact('categories'));
     }
 

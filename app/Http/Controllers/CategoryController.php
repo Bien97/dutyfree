@@ -26,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return redirect()->route('admin.categories.index');
+        return view('admin.categories.create');
     }
 
     /**
