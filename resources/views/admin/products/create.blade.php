@@ -4,7 +4,7 @@
 
 
 @section('content')
-<div class="container py-4">
+<div class="container py-4 mt-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0">Créer un nouveau produit</h4>
         <a href="{{ route('admin.products.index') }}" class="btn btn-outline-secondary">← Retour à la liste</a>
