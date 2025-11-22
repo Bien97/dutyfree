@@ -1837,9 +1837,11 @@
 
     
 
+<div class="py-2">
 
+    @yield('content')
+</div>
 
-@yield('content')
    
 
     <!-- JAVASCRIPT -->
