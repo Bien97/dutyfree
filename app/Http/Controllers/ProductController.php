@@ -42,8 +42,8 @@ class ProductController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'stock' => ['required', 'integer', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
-            'image' => ['nullable', 'image', 'max:2048'], // upload optionnel
-            'image_path' => ['nullable', 'string'],        // chemin direct optionnel
+            'image' => ['nullable', 'image', 'max:2048'], 
+            'image_path' => ['nullable', 'string'],        
         ]);
 
         // Gestion de l'image: priorité à l'upload, sinon chemin fourni
@@ -51,7 +51,7 @@ class ProductController extends Controller
             $path = $request->file('image')->store('products', 'public');
             $validated['image_path'] = Storage::url($path); // /storage/products/...
         } elseif ($request->filled('image_path')) {
-            // garder tel quel (ex: /images/products/xxx.jpg ou URL externe)
+            
             $validated['image_path'] = $request->string('image_path');
         }
 
