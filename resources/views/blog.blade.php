@@ -131,7 +131,7 @@
                 <div class="post-entry">
                     <a href="#" class="post-thumbnail"><img src="{{ asset('assets/images/post-3.jpg') }}" alt="Image" class="img-fluid"></a>
                     <div class="post-content-entry">
-                        <h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
+                        <h3><a href="#">Small Space Fuurniture Apartment Ideas</a></h3>
                         <div class="meta">
                             <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 12, 2021</a></span>
                         </div>
