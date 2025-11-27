@@ -21,9 +21,9 @@ class AuthController extends Controller
         $request->validate([
             'firstname' => 'required|string|max:100',
             'lastname' => 'required|string|max:100',
-            'pseudo' => 'nullable|string|max:255',
-            'phone_number' => 'nullable|string|max:255|unique:users,telephone',
-            'adresse' => 'nullable|string|max:255',
+            'pseudo' => 'required|string|max:255|unique:users,pseudo',
+            'phone_number' => 'nullable|string|max:255|unique:users,phone_number',
+            'address' => 'nullable|string|max:255',
             'password' => 'required|min:6',
         ]);
 
@@ -33,7 +33,7 @@ class AuthController extends Controller
             'pseudo' => $request->pseudo,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
-            'adresse' => $request->adresse,
+            'address' => $request->address,
         ]);
 
         Auth::login($user);
@@ -50,14 +50,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'phone_number' => 'required',
+            'pseudo' => 'required',
             'password' => 'required',
         ]);
 
-        $user = User::where('phone_number', $credentials['phone_number'])->first();
+        $user = User::where('pseudo', $credentials['pseudo'])->first();
 
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            return back()->withErrors(['phone_number' => 'Identifiants incorrects']);
+            return back()->withErrors(['pseudo' => 'Identifiants incorrects']);
         }
 
         Auth::login($user);

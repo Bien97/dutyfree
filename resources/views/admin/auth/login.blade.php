@@ -70,22 +70,22 @@
 
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
-                                    <h5 class="text-primary">Welcome Back !</h5>
-                                    <p class="text-muted">Sign in to continue to Velzon.</p>
+                                    <h5 class="text-primary">Bienvenue !</h5>
+                                    <p class="text-muted">Connectez-vous avec votre pseudo.</p>
                                 </div>
                                 <div class="p-2 mt-4">
                                     <form action="{{ route('login') }}" method="POST">
                                         @csrf
                                         <div class="mb-3">
-                                            <label for="phone_number" class="form-label">Telephone</label>
-                                            <input type="tel" name="phone_number" class="form-control" id="phone_number" placeholder="Entrez votre numéro de téléphone">
+                                            <label for="pseudo" class="form-label">Pseudo</label>
+                                            <input type="text" name="pseudo" class="form-control" id="pseudo" placeholder="Entrez votre pseudo">
                                         </div>
 
                                         <div class="mb-3">
                                             <div class="float-end">
-                                                <a href="auth-pass-reset-basic.html" class="text-muted">Forgot password?</a>
+                                                <a href="#" class="text-muted">Mot de passe oublié ?</a>
                                             </div>
-                                            <label class="form-label" for="password-input">Password</label>
+                                            <label class="form-label" for="password-input">Mot de passe</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
                                                 <input type="password" name="password" class="form-control pe-5 password-input" placeholder="Tapez votre mot de passe" id="password-input">
                                                 <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
@@ -94,14 +94,14 @@
 
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
-                                            <label class="form-check-label" for="auth-remember-check">Remember me</label>
+                                            <label class="form-check-label" for="auth-remember-check">Se souvenir de moi</label>
                                         </div>
 
                                         <div class="mt-4">
-                                            <button class="btn btn-success w-100" type="submit">Sign In</button>
+                                            <button class="btn btn-success w-100" type="submit">Se connecter</button>
                                         </div>
 
-                                        <div class="mt-4 text-center">
+                                        {{-- <div class="mt-4 text-center">
                                             <div class="signin-other-title">
                                                 <h5 class="fs-13 mb-4 title">Sign In with</h5>
                                             </div>
@@ -111,7 +111,7 @@
                                                 <button type="button" class="btn btn-dark btn-icon waves-effect waves-light"><i class="ri-github-fill fs-16"></i></button>
                                                 <button type="button" class="btn btn-info btn-icon waves-effect waves-light"><i class="ri-twitter-fill fs-16"></i></button>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </form>
                                 </div>
                             </div>
