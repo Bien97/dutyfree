@@ -2,27 +2,26 @@
 <footer class="footer-section">
     <div class="container relative">
 
-        <div class="sofa-img">
-            <img src="{{ asset('assets/images/sofa.png') }}" alt="Image" class="img-fluid">
-        </div>
+        {{-- <div class="sofa-img">
+            <img src="{{ asset('assets/images/sofa.jpg') }}" alt="Image" class="img-fluid">
+        </div> --}}
 
         <div class="row">
             <div class="col-lg-8">
                 <div class="subscription-form">
                     <h3 class="d-flex align-items-center">
                         <span class="me-1">
-                            <img src="{{ asset('assets/images/envelope-outline.svg') }}" alt="Envelope"
-                                class="img-fluid">
+                            <img src="{{ asset('assets/images/envelope-outline.svg') }}" alt="Envelope" class="img-fluid">
                         </span>
-                        <span>Subscribe to Newsletter</span>
+                        <span>S'abonner à la newsletter</span>
                     </h3>
 
                     <form action="#" class="row g-3">
                         <div class="col-auto">
-                            <input type="text" class="form-control" placeholder="Enter your name">
+                            <input type="text" class="form-control" placeholder="Entrez votre nom">
                         </div>
                         <div class="col-auto">
-                            <input type="email" class="form-control" placeholder="Enter your email">
+                            <input type="email" class="form-control" placeholder="Entrez votre email">
                         </div>
                         <div class="col-auto">
                             <button class="btn btn-primary">
@@ -37,11 +36,12 @@
 
         <div class="row g-5 mb-5">
             <div class="col-lg-4">
-                <div class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo">Furni<span>.</span></a>
-                </div>
-                <p class="mb-4">Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus
-                    malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.
-                    Pellentesque habitant</p>
+                <a class="navbar-brand" href="{{ route('home') }}">
+                    <img src="{{ asset('assets/images/dutyfree-logo-BRFPKRQG.png') }}" alt="DutyFree Express"
+                        height="100">
+                </a>
+                <p class="mb-4">Précommandez vos produits Duty Free en ligne et récupérez-les à l’aéroport. Simple,
+                    rapide et sans paiement en ligne.</p>
 
                 <ul class="list-unstyled custom-social">
                     <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
@@ -55,10 +55,10 @@
                 <div class="row links-wrap">
                     <div class="col-6 col-sm-6 col-md-3">
                         <ul class="list-unstyled">
-                            <li><a href="{{ route('about') }}">About us</a></li>
-                            <li><a href="{{ route('services') }}">Services</a></li>
-                            <li><a href="{{ route('blog') }}">Blog</a></li>
-                            <li><a href="{{ route('contact') }}">Contact us</a></li>
+                            <li><a href="{{ route('about') }}">À propos</a></li>
+                            <li><a href="{{ route('shop') }}">Boutique</a></li>
+                            {{-- <li><a href="{{ route('blog') }}">Blog</a></li> --}}
+                            <li><a href="{{ route('contact') }}">Contactez-nous</a></li>
                         </ul>
                     </div>
 
@@ -70,7 +70,7 @@
                         </ul>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-3">
+                    {{-- <div class="col-6 col-sm-6 col-md-3">
                         <ul class="list-unstyled">
                             <li><a href="#">Jobs</a></li>
                             <li><a href="#">Our team</a></li>
@@ -85,7 +85,7 @@
                             <li><a href="#">Kruzo Aero</a></li>
                             <li><a href="#">Ergonomic Chair</a></li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -97,9 +97,10 @@
                     <p class="mb-2 text-center text-lg-start">Copyright &copy;
                         <script>
                             document.write(new Date().getFullYear());
-                        </script>. All Rights Reserved. &mdash; Designed with love by <a
+                        </script>. All Rights Reserved.
+                        {{-- &mdash; Designed with love by <a
                             href="https://untree.co">Untree.co</a> Distributed By <a
-                            href="https://themewagon.com">ThemeWagon</a>
+                            href="https://themewagon.com">ThemeWagon</a> --}}
                     </p>
                 </div>
 

@@ -4,92 +4,104 @@
 
 @section('content')
 
-<!-- Start Hero Section -->
-<div class="hero">
+    <!-- Start Hero Section -->
+    <div class="hero"
+    style="background: url('{{ asset('assets/images/about-as-service-contact-information-concept (1).jpg') }}') no-repeat center center !important; 
+    background-size: cover !important; 
+    padding: 120px 0 !important;
+    min-height: 550px !important;
+    height: 550px !important;
+    max-height: 550px !important;">
+    
     <div class="container">
         <div class="row justify-content-between">
             <div class="col-lg-5">
                 <div class="intro-excerpt">
-                    <h1>About Us</h1>
-                    <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-                    <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div class="hero-img-wrap">
-                    <img src="{{ asset('assets/images/couch.png') }}" class="img-fluid" alt="Couch">
+                    <h1>À propos de nous</h1>
+                    <p class="mb-4">
+                        Nous facilitons vos achats Duty Free : réservez en ligne, récupérez vos articles à
+                        l’aéroport, sans paiement en ligne et sans attente.
+                    </p>
+                    <p>
+                        {{-- <a href="" class="btn btn-secondary me-2">Acheter maintenant</a> --}}
+                        {{-- <a href="#" class="btn btn-white-outline">Explorer</a> --}}
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- End Hero Section -->
 
-<!-- Start Why Choose Us Section -->
-<div class="why-choose-section">
-    <div class="container">
-        <div class="row justify-content-between align-items-center">
-            <div class="col-lg-6">
-                <h2 class="section-title">Why Choose Us</h2>
-                <p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
+    <!-- End Hero Section -->
 
-                <div class="row my-5">
-                    <div class="col-6 col-md-6">
-                        <div class="feature">
-                            <div class="icon">
-                                <img src="{{ asset('assets/images/truck.svg') }}" alt="Image" class="imf-fluid">
+    <!-- Start Why Choose Us Section -->
+    <div class="why-choose-section">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-6">
+                    <h2 class="section-title">Pourquoi nous choisir ?</h2>
+                    <p>Précommandez vos produits Duty Free en ligne et récupérez-les directement à l’aéroport.
+                        Simple, rapide et sécurisé — aucun paiement en ligne requis.</p>
+
+                    <div class="row my-5">
+                        <div class="col-6 col-md-6">
+                            <div class="feature">
+                                <div class="icon">
+                                    <img src="{{ asset('assets/images/truck.svg') }}" alt="Image" class="img-fluid">
+                                </div>
+                                <h3>Retrait rapide à l’aéroport</h3>
+                                <p>Réservez vos produits en ligne et récupérez-les au comptoir sans attendre.</p>
                             </div>
-                            <h3>Fast &amp; Free Shipping</h3>
-                            <p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
+                        </div>
+
+                        <div class="col-6 col-md-6">
+                            <div class="feature">
+                                <div class="icon">
+                                    <img src="{{ asset('assets/images/bag.svg') }}" alt="Image" class="img-fluid">
+                                </div>
+                                <h3>Shopping simple & pratique</h3>
+                                <p>Parcourez notre catalogue, ajoutez vos articles au panier et précommandez en quelques
+                                    clics.</p>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-6">
+                            <div class="feature">
+                                <div class="icon">
+                                    <img src="{{ asset('assets/images/support.svg') }}" alt="Image" class="img-fluid">
+                                </div>
+                                <h3>Assistance disponible</h3>
+                                <p>Notre équipe est là pour répondre à vos questions sur les commandes et le retrait.</p>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-6">
+                            <div class="feature">
+                                <div class="icon">
+                                    <img src="{{ asset('assets/images/return.svg') }}" alt="Image" class="img-fluid">
+                                </div>
+                                <h3>Flexibilité & tranquillité</h3>
+                                <p>Vous pouvez modifier ou annuler vos commandes avant le retrait, facilement et rapidement.
+                                </p>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="col-6 col-md-6">
-                        <div class="feature">
-                            <div class="icon">
-                                <img src="{{ asset('assets/images/bag.svg') }}" alt="Image" class="imf-fluid">
-                            </div>
-                            <h3>Easy to Shop</h3>
-                            <p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-md-6">
-                        <div class="feature">
-                            <div class="icon">
-                                <img src="{{ asset('assets/images/support.svg') }}" alt="Image" class="imf-fluid">
-                            </div>
-                            <h3>24/7 Support</h3>
-                            <p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-md-6">
-                        <div class="feature">
-                            <div class="icon">
-                                <img src="{{ asset('assets/images/return.svg') }}" alt="Image" class="imf-fluid">
-                            </div>
-                            <h3>Hassle Free Returns</h3>
-                            <p>Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate.</p>
-                        </div>
-                    </div>
-
                 </div>
-            </div>
 
-            <div class="col-lg-5">
-                <div class="img-wrap">
-                    <img src="{{ asset('assets/images/why-choose-us-img.jpg') }}" alt="Image" class="img-fluid">
+
+                <div class="col-lg-5">
+                    <div class="img-wrap">
+                        <img src="{{ asset('assets/images/pexels-magda-ehlers-pexels-2861656_1_cropped.png') }}" alt="Image" class="img-fluid">
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
-<!-- End Why Choose Us Section -->
+    <!-- End Why Choose Us Section -->
 
-<!-- Start Team Section -->
-<div class="untree_co-section">
+    <!-- Start Team Section -->
+    {{-- <div class="untree_co-section">
     <div class="container">
 
         <div class="row mb-5">
@@ -142,99 +154,108 @@
 
         </div>
     </div>
-</div>
-<!-- End Team Section -->
+</div> --}}
+    <!-- End Team Section -->
 
-<!-- Start Testimonial Slider -->
-<div class="testimonial-section before-footer-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7 mx-auto text-center">
-                <h2 class="section-title">Testimonials</h2>
+    <!-- Start Testimonial Slider -->
+    <div class="testimonial-section before-footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 mx-auto text-center">
+                    <h2 class="section-title">Ce que disent nos clients</h2>
+                </div>
             </div>
-        </div>
 
-        <div class="row justify-content-center">
-            <div class="col-lg-12">
-                <div class="testimonial-slider-wrap text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="testimonial-slider-wrap text-center">
 
-                    <div id="testimonial-nav">
-                        <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
-                        <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+                        <div id="testimonial-nav">
+                            <span class="prev" data-controls="prev"><span class="fa fa-chevron-left"></span></span>
+                            <span class="next" data-controls="next"><span class="fa fa-chevron-right"></span></span>
+                        </div>
+
+                        <div class="testimonial-slider">
+
+                            <div class="item">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8 mx-auto">
+                                        <div class="testimonial-block text-center">
+                                            <blockquote class="mb-5">
+                                                <p>&ldquo;J’ai réservé mes parfums en ligne et tout était prêt à mon arrivée
+                                                    à l’aéroport.
+                                                    Service rapide, efficace et sans tracas. Je recommande vivement !&rdquo;
+                                                </p>
+                                            </blockquote>
+
+                                            <div class="author-info">
+                                                <div class="author-pic">
+                                                    <img src="{{ asset('assets/images/person-1.png') }}"
+                                                        alt="Sophie Martin" class="img-fluid">
+                                                </div>
+                                                <h3 class="font-weight-bold">Sophie Martin</h3>
+                                                <span class="position d-block mb-3">Voyageuse fréquente</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END item -->
+
+                            <div class="item">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8 mx-auto">
+                                        <div class="testimonial-block text-center">
+                                            <blockquote class="mb-5">
+                                                <p>&ldquo;Le retrait à l’aéroport a été un jeu d’enfant. J’ai économisé du
+                                                    temps et j’ai eu mes chocolats préférés. Très pratique !&rdquo;</p>
+                                            </blockquote>
+
+                                            <div class="author-info">
+                                                <div class="author-pic">
+                                                    <img src="{{ asset('assets/images/person-1.png') }}"
+                                                        alt="Jean Dupont" class="img-fluid">
+                                                </div>
+                                                <h3 class="font-weight-bold">Jean Dupont</h3>
+                                                <span class="position d-block mb-3">Voyageur d’affaires</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END item -->
+
+                            <div class="item">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8 mx-auto">
+                                        <div class="testimonial-block text-center">
+                                            <blockquote class="mb-5">
+                                                <p>&ldquo;Service impeccable ! La précommande en ligne est super simple et
+                                                    le personnel à l’aéroport était très accueillant. Je le referai à chaque
+                                                    voyage.&rdquo;</p>
+                                            </blockquote>
+
+                                            <div class="author-info">
+                                                <div class="author-pic">
+                                                    <img src="{{ asset('assets/images/person-1.png') }}"
+                                                        alt="Emma Lefevre" class="img-fluid">
+                                                </div>
+                                                <h3 class="font-weight-bold">Emma Lefevre</h3>
+                                                <span class="position d-block mb-3">Voyageuse régulière</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END item -->
+
+                        </div>
+
                     </div>
-
-                    <div class="testimonial-slider">
-                        
-                        <div class="item">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8 mx-auto">
-                                    <div class="testimonial-block text-center">
-                                        <blockquote class="mb-5">
-                                            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer convallis volutpat dui quis scelerisque.&rdquo;</p>
-                                        </blockquote>
-
-                                        <div class="author-info">
-                                            <div class="author-pic">
-                                                <img src="{{ asset('assets/images/person-1.png') }}" alt="Maria Jones" class="img-fluid">
-                                            </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                        <!-- END item -->
-
-                        <div class="item">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8 mx-auto">
-                                    <div class="testimonial-block text-center">
-                                        <blockquote class="mb-5">
-                                            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer convallis volutpat dui quis scelerisque.&rdquo;</p>
-                                        </blockquote>
-
-                                        <div class="author-info">
-                                            <div class="author-pic">
-                                                <img src="{{ asset('assets/images/person-1.png') }}" alt="Maria Jones" class="img-fluid">
-                                            </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                        <!-- END item -->
-
-                        <div class="item">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8 mx-auto">
-                                    <div class="testimonial-block text-center">
-                                        <blockquote class="mb-5">
-                                            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer convallis volutpat dui quis scelerisque.&rdquo;</p>
-                                        </blockquote>
-
-                                        <div class="author-info">
-                                            <div class="author-pic">
-                                                <img src="{{ asset('assets/images/person-1.png') }}" alt="Maria Jones" class="img-fluid">
-                                            </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                        <!-- END item -->
-
-                    </div>
-
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- End Testimonial Slider -->
+    <!-- End Testimonial Slider -->
 
 @endsection

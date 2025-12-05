@@ -30,9 +30,17 @@ Route::get('/blog', function () {
     return view('blog');
 })->name('blog');
 
+Route::get('/cart', function () {
+    return view('cart');
+})->name('cart');
+
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
+
+Route::get('/checkout', function () {
+    return view('checkout');
+})->name('checkout');
 
 
 

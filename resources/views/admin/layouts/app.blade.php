@@ -969,51 +969,39 @@
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{ route('dashboard') }}">
                                 <i class="las la-tachometer-alt"></i>
-                                <span data-key="t-dashboards">Dashboards</span>
+                                <span data-key="t-dashboards">Dashboard</span>
                             </a>
                         </li>
                         <!-- end Dashboard Menu -->
 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sidebarCategories" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="sidebarCategories">
-                                <i class="las la-list"></i> <span data-key="t-categories">Catégories</span>
+                            <a class="nav-link menu-link" href="{{ route('admin.categories.index') }}">
+                                <i class="las la-list"></i>
+                                <span data-key="t-categories">Gestion des catégories</span>
                             </a>
-                            <div class="collapse menu-dropdown" id="sidebarCategories">
-                                <ul class="nav nav-sm flex-column">
-                                    <a href="{{ route('admin.categories.index') }}" class="nav-link"
-                                        data-key="t-list-categories">
-                                        Liste des catégories
-                                    </a>
-                                    {{-- <li class="nav-item">
-                                        <a href="categories-add.html" class="nav-link"
-                                            data-key="t-add-category">Ajouter une catégorie</a>
-                                    </li> --}}
-                                </ul>
-                            </div>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#sidebarProducts" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="sidebarProducts">
-                                <i class="las la-box"></i> <span data-key="t-products">Produits</span>
+                            <a class="nav-link menu-link" href="{{ route('admin.products.index') }}">
+                                <i class="las la-box"></i>
+                                <span data-key="t-products">Gestion des produits</span>
                             </a>
-                            <div class="collapse menu-dropdown" id="sidebarProducts">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <a href="{{ route('admin.products.index') }}" class="nav-link"
-                                            data-key="t-list-products">
-                                            Liste des produits
-                                        </a>
-
-                                    </li>
-                                    {{-- <li class="nav-item">
-                                        <a href="products-add.html" class="nav-link" data-key="t-add-product">Ajouter
-                                            un produit</a>
-                                    </li> --}}
-                                </ul>
-                            </div>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#">
+                                <i class="las la-comment-dots"></i>
+                                <span data-key="t-testimonials">Gestion des Témoignages</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="#">
+                                <i class="las la-cog"></i>
+                                <span data-key="t-settings">Paramètres</span>
+                            </a>
+                        </li>
+
                         {{-- <li class="nav-item">
                             <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse"
                                 role="button" aria-expanded="false" aria-controls="sidebarApps">
