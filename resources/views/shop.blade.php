@@ -4,9 +4,14 @@
 
 @section('content')
 
+<style>
+    .shop-hero-offset { padding-top: 160px; }
+    @media (max-width: 991px) { .shop-hero-offset { padding-top: 120px; } }
+</style>
+
 <!-- Start Hero Section -->
 
-    <div class="container mt-5">
+    <div class="container shop-hero-offset">
         <div class="row justify-content-between align-items-center">
            
             <div class="col-lg-12 text-center text-lg-start">

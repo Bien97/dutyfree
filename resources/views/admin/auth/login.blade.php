@@ -58,7 +58,7 @@
                                     <img src="assets/images/logo-light.png" alt="" height="20">
                                 </a>
                             </div>
-                            <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
+                            {{-- <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p> --}}
                         </div>
                     </div>
                 </div>
@@ -82,9 +82,9 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <div class="float-end">
+                                            {{-- <div class="float-end">
                                                 <a href="#" class="text-muted">Mot de passe oublié ?</a>
-                                            </div>
+                                            </div> --}}
                                             <label class="form-label" for="password-input">Mot de passe</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
                                                 <input type="password" name="password" class="form-control pe-5 password-input" placeholder="Tapez votre mot de passe" id="password-input">
@@ -92,10 +92,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-check">
+                                        {{-- <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
                                             <label class="form-check-label" for="auth-remember-check">Se souvenir de moi</label>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="mt-4">
                                             <button class="btn btn-success w-100" type="submit">Se connecter</button>
@@ -119,9 +119,9 @@
                         </div>
                         <!-- end card -->
 
-                        <div class="mt-4 text-center">
+                        {{-- <div class="mt-4 text-center">
                             <p class="mb-0">Don't have an account ? <a href="auth-signup-basic.html" class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>
@@ -136,11 +136,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="text-center">
+                        {{-- <div class="text-center">
                             <p class="mb-0 text-muted">&copy;
                                 <script>document.write(new Date().getFullYear())</script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
                             </p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
