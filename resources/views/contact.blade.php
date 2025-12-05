@@ -4,6 +4,20 @@
 
 @section('content')
 
+    <style>
+        .btn-explorer {
+            background: #ADD8E6 !important;
+            border: 2px solid #ADD8E6 !important;
+            color: #003d7a !important;
+            transition: 0.3s ease;
+        }
+
+        .btn-explorer:hover {
+            background: transparent !important;
+            color: #ADD8E6 !important;
+        }
+    </style>
+
     <!-- Start Hero Section -->
     <div class="hero"
         style="background: url('{{ asset('assets/images/customer-service-business-contact-concept-wooden-cube-block-which-print-screen-letter-telephone-email-address-message.jpg') }}') no-repeat center center !important; 
@@ -119,7 +133,7 @@
                                 <textarea name="" class="form-control" id="message" cols="30" rows="5"></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary-hover-outline">Envoyer un message</button>
+                            <button type="submit" class="btn btn-explorer">Envoyer un message</button>
                         </form>
 
                     </div>
