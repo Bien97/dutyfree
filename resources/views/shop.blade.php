@@ -8,7 +8,23 @@
     .shop-hero-offset { padding-top: 160px; }
     @media (max-width: 991px) { .shop-hero-offset { padding-top: 120px; } }
 </style>
-
+ <div class="hero"
+        style="background: url('{{ asset('assets/images/pexels-mikhail-nilov-6969962.jpg') }}') no-repeat center center !important; 
+        background-size: cover !important; 
+        padding: 120px 0 !important;
+        min-height: 550px !important;
+        height: 550px !important;
+        max-height: 550px !important;">
+        <div class="container">
+            <div class="row justify-content-between align-items-start">
+                <div class="col-lg-5">
+                    <div class="intro-excerpt">
+                        <h1>Boutique</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- Start Hero Section -->
 
     <div class="container shop-hero-offset">
