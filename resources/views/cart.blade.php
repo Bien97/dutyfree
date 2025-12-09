@@ -192,4 +192,21 @@
         </div>
     </div>
 
+    <style>
+        
+
+        /* Définir la police de tout le site */
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* ou une autre police */
+        }
+
+        /* Si tu veux juste une section précise */
+        .hero,
+        .product-section,
+        .footer-section {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+
 @endsection

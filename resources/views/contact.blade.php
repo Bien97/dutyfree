@@ -9,12 +9,20 @@
             background: #ADD8E6 !important;
             border: 2px solid #ADD8E6 !important;
             color: #003d7a !important;
-            transition: 0.3s ease;
+            transition: all 0.3s ease;
+            /* transition plus rapide et discrète */
         }
 
+        /* Effet hover plus subtil */
         .btn-explorer:hover {
-            background: transparent !important;
-            color: #ADD8E6 !important;
+            background: #003d7a !important;
+            /* fond sombre pour contraste */
+            color: #fff !important;
+            /* texte blanc */
+            transform: scale(1.05);
+            /* léger agrandissement */
+            box-shadow: 0 4px 10px rgba(0, 61, 122, 0.3);
+            /* ombre plus douce */
         }
     </style>
 
@@ -32,10 +40,11 @@
                 <div class="col-lg-5">
                     <div class="intro-excerpt">
                         <h1>Contact</h1>
-                        <p class="mb-4">
+                        <p class="mb-4" style="font-size: 1.1rem; line-height: 1.1;">
                             Besoin d’aide ? Notre équipe est disponible pour répondre à vos questions sur les
                             précommandes et le retrait à l’aéroport.
                         </p>
+
                         <p>
                             {{-- <a href="{{ route('shop') }}" class="btn btn-secondary me-2">Acheter maintenant</a> --}}
                             {{-- <a href="#" class="btn btn-white-outline"></a> --}}
@@ -60,7 +69,8 @@
 
                         <div class="row mb-5">
                             <div class="col-lg-4">
-                                <div class="service no-shadow align-items-center link horizontal d-flex active"
+                                <a href="https://www.google.com/maps/search/?api=1&query=Lomé+Togo" target="_blank"
+                                    class="service no-shadow align-items-center link horizontal d-flex active"
                                     data-aos="fade-left" data-aos-delay="0">
                                     <div class="service-icon color-1 mb-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -70,13 +80,14 @@
                                         </svg>
                                     </div>
                                     <div class="service-contents">
-                                        <p>43 Raymouth Rd. Baltemoer, London 3910</p>
+                                        <p>Lomé, Togo</p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-lg-4">
-                                <div class="service no-shadow align-items-center link horizontal d-flex active"
+                                <a href="mailto:contact@dutyfree.com"
+                                    class="service no-shadow align-items-center link horizontal d-flex active"
                                     data-aos="fade-left" data-aos-delay="0">
                                     <div class="service-icon color-1 mb-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -86,9 +97,9 @@
                                         </svg>
                                     </div>
                                     <div class="service-contents">
-                                        <p>info@yourdomain.com</p>
+                                        <p>contact@dutyfree.com</p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-lg-4">
@@ -102,10 +113,15 @@
                                         </svg>
                                     </div>
                                     <div class="service-contents">
-                                        <p>+1 294 3925 3939</p>
+                                        <p>
+                                            <a href="https://wa.me/22890862570" target="_blank">+228 90 86 25 70</a> /
+                                            <a href="https://wa.me/22899476525" target="_blank">+228 99 47 65 25</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
 
                         <form>
@@ -138,6 +154,7 @@
 
                     </div>
 
+
                 </div>
 
             </div>
@@ -145,5 +162,20 @@
         </div>
     </div>
     <!-- End Contact Form -->
+
+    <style>
+        /* Définir la police de tout le site */
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* ou une autre police */
+        }
+
+        /* Si tu veux juste une section précise */
+        .hero,
+        .product-section,
+        .footer-section {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 
 @endsection

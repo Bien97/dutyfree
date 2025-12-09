@@ -15,11 +15,11 @@
 
     <div class="hero"
         style="background: url('{{ asset('assets/images/pexels-mikhail-nilov-6969962.jpg') }}') no-repeat center center !important; 
-        background-size: cover !important; 
-        padding: 120px 0 !important;
-        min-height: 550px !important;
-        height: 550px !important;
-        max-height: 550px !important;">
+    background-size: cover !important; 
+    padding: 120px 0 !important;
+    min-height: 550px !important;
+    height: 550px !important;
+    max-height: 550px !important;">
         <div class="container">
             <div class="row justify-content-between align-items-start">
                 <div class="col-lg-5">
@@ -30,17 +30,12 @@
             </div>
         </div>
     </div>
-
-
-
     <!-- End Hero Section -->
-
-
 
     <div class="untree_co-section product-section before-footer-section">
         <div class="container">
             <div class="row" id="product-list">
-                <!-- L'espace reservé à l'affichage des produits-->
+                <!-- L'espace réservé à l'affichage des produits -->
             </div>
         </div>
     </div>
@@ -97,16 +92,16 @@
                 const imgSrc = (p.image_path && typeof p.image_path === 'string') ? p.image_path : defaultImage;
 
                 return `
-            <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
-                    <img src="${imgSrc}" class="img-fluid product-thumbnail" alt="${escapeHtml(p.name || 'Produit')}">
-                    <h3 class="product-title">${escapeHtml(p.name || '')}</h3>
-                    <strong class="product-price">${formatPrice(p.price)}F CFA</strong>
-                    <span class="icon-cross">
-                        <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
-                    </span>
-                </a>
+        <div class="col-12 col-md-4 col-lg-3 mb-5">
+            <div class="product-item">
+                <img src="${imgSrc}" class="img-fluid product-thumbnail" alt="${escapeHtml(p.name || 'Produit')}">
+                <h3 class="product-title">${escapeHtml(p.name || '')}</h3>
+                <strong class="product-price">${formatPrice(p.price)}F CFA</strong>
+                <span class="icon-cross" style="cursor:pointer;" onclick="window.location.href='{{ url('cart') }}'">
+                    <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
+                </span>
             </div>
+        </div>
         `;
             }
 
@@ -125,5 +120,21 @@
             }
         });
     </script>
-@endpush
 
+    <style>
+        
+
+        /* Définir la police de tout le site */
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* ou une autre police */
+        }
+
+        /* Si tu veux juste une section précise */
+        .hero,
+        .product-section,
+        .footer-section {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+@endpush

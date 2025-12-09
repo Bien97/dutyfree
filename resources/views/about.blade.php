@@ -18,7 +18,7 @@
             <div class="col-lg-5">
                 <div class="intro-excerpt">
                     <h1>À propos de nous</h1>
-                    <p class="mb-4">
+                    <p class="mb-4" style="font-size: 1.1rem; line-height: 1.1;">
                         Nous facilitons vos achats Duty Free : réservez en ligne, récupérez vos articles à
                         l’aéroport, sans paiement en ligne et sans attente.
                     </p>
@@ -257,5 +257,22 @@
         </div>
     </div>
     <!-- End Testimonial Slider -->
+
+    <style>
+        
+
+        /* Définir la police de tout le site */
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* ou une autre police */
+        }
+
+        /* Si tu veux juste une section précise */
+        .hero,
+        .product-section,
+        .footer-section {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 
 @endsection
