@@ -3,7 +3,7 @@
 
     <div class="container">
         <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('assets/images/dutyfree-logo-BRFPKRQG.png') }}" alt="DutyFree Express" height="100">
+            <img src="{{ asset('assets/images/dutyfree-logo-BRFPKRQG.png') }}" alt="DutyFree Express" height="80">
         </a>
 
 
@@ -84,7 +84,7 @@
 <!-- End Header/Navigation -->
 
 <style>
-    /* Rendre le header transparent et fixe */
+    /* Header transparent */
     .custom-navbar {
         position: fixed !important;
         top: 0;
@@ -92,229 +92,138 @@
         right: 0;
         width: 100%;
         background: transparent !important;
-        background-color: transparent !important;
         z-index: 1000;
         transition: all 0.3s ease;
         padding: 20px 0;
-        opacity: 1;
     }
 
-    /* Header disparaît au scroll */
     .custom-navbar.scrolled {
         transform: translateY(-100%);
         opacity: 0;
         pointer-events: none;
     }
 
-    /* S'assurer que le body commence en haut */
-    body {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-    }
-
-    /* Section hero en plein écran */
+    /* Sections hero (hauteur + paramètres) */
     .hero-section,
     section:first-of-type,
     .hero {
         min-height: 100vh !important;
         height: 100vh;
-        padding-top: 0 !important;
-        margin-top: 0 !important;
         display: flex;
         align-items: center;
-        position: relative;
         background-size: cover !important;
         background-position: center !important;
+        position: relative;
+        overflow: hidden;
     }
 
-    /* Overlay sombre sur l'image */
+    /* *** Assombrissement de l'image du hero *** */
+    .hero::before,
     .hero-section::before,
-    section:first-of-type::before,
-    .hero::before {
-        content: '';
+    section:first-of-type::before {
+        content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
+        inset: 0;
+        background: rgba(0, 0, 0, 0,5); /* intensité du sombre */
         z-index: 1;
     }
 
-    /* Contenu hero */
-    .hero-content,
-    .intro-excerpt {
-        padding-top: 100px;
+    /* Textes au-dessus du sombre */
+    .hero *,
+    .hero-section *,
+    section:first-of-type * {
         position: relative;
         z-index: 2;
     }
 
-    /* Container du hero au-dessus de l'overlay */
-    .hero .container,
-    .hero-section .container,
-    section:first-of-type .container {
-        position: relative;
-        z-index: 2;
-    }
-
-    /* Logo ULTRA visible en BLANC PUR */
+    /* Logo blanc pur */
     .navbar-brand {
         color: #ffffff !important;
         font-weight: bold;
         font-size: 1.8rem !important;
-        text-shadow:
-            0 2px 8px rgba(0, 0, 0, 0.8),
-            0 4px 16px rgba(0, 0, 0, 0.6),
-            0 0 20px rgba(0, 0, 0, 0.4);
-        letter-spacing: 0.5px;
+        text-shadow: none !important;
     }
 
     .navbar-brand span {
         color: #f9bf29 !important;
     }
 
-    /* MENU EN BLANC PUR - Accueil, Boutique, etc. */
+
+    /* ============================================================
+       MENU : blanc pur (normal) + hover & active TRÈS brillants
+       ============================================================ */
+
+    /* NORMAL = blanc pur */
     .custom-navbar-nav .nav-link {
         color: #ffffff !important;
+        opacity: 1 !important;
         font-weight: 600 !important;
         font-size: 1.05rem !important;
-        text-shadow:
-            0 2px 6px rgba(0, 0, 0, 0.9),
-            0 3px 12px rgba(0, 0, 0, 0.7),
-            0 0 15px rgba(0, 0, 0, 0.5);
         padding: 8px 16px !important;
         transition: all 0.3s ease;
+        text-shadow: none !important;
     }
 
+    /* HOVER = doré + glow accentué */
     .custom-navbar-nav .nav-link:hover {
         color: #f9bf29 !important;
         text-shadow:
-            0 2px 8px rgba(0, 0, 0, 1),
-            0 4px 16px rgba(249, 191, 41, 0.5),
-            0 0 20px rgba(249, 191, 41, 0.3);
+            0 0 10px rgba(249, 191, 41, 0.9),
+            0 0 20px rgba(249, 191, 41, 0.7),
+            0 0 35px rgba(249, 191, 41, 0.5);
         transform: translateY(-2px);
     }
 
+    /* ACTIVE = doré + glow puissant */
     .custom-navbar-nav .nav-link.active {
         color: #f9bf29 !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         text-shadow:
-            0 2px 8px rgba(0, 0, 0, 1),
-            0 4px 16px rgba(249, 191, 41, 0.6),
-            0 0 25px rgba(249, 191, 41, 0.4);
+            0 0 12px rgba(249, 191, 41, 1),
+            0 0 28px rgba(249, 191, 41, 0.9),
+            0 0 50px rgba(249, 191, 41, 0.8);
+        transform: translateY(-2px);
     }
 
-    /* Textes et paragraphes dans le hero en BLANC ÉCLATANT */
+    /* Textes hero (blanc pur sans glow) */
     .hero p,
-    .hero-section p,
-    section:first-of-type p,
-    .intro-excerpt p,
     .hero h1,
     .hero h2,
     .hero h3,
+    .hero-section p,
     .hero-section h1,
     .hero-section h2,
-    .hero-section h3,
-    section:first-of-type h1,
-    section:first-of-type h2,
-    section:first-of-type h3 {
+    .hero-section h3 {
         color: #ffffff !important;
-        text-shadow:
-            0 2px 8px rgba(0, 0, 0, 0.9),
-            0 4px 16px rgba(0, 0, 0, 0.7),
-            0 0 20px rgba(0, 0, 0, 0.5);
         font-weight: 500;
+        text-shadow: none !important;
     }
 
     .hero h1,
-    .hero-section h1,
-    section:first-of-type h1 {
-        font-weight: 700 !important;
+    .hero-section h1 {
         font-size: 3rem !important;
+        font-weight: 700 !important;
     }
 
-    /* Animation pour les textes au chargement */
-    .hero h1,
-    .hero-section h1,
-    section:first-of-type h1 {
-        animation: fadeInUp 1.8s ease-out;
-    }
-
-    .hero p,
-    .hero-section p,
-    section:first-of-type p,
-    .intro-excerpt p {
-        animation: fadeInUp 2s ease-out;
-        animation-delay: 0.6s;
-        opacity: 0;
-        animation-fill-mode: forwards;
-    }
-
-    .hero .btn,
-    .hero-section .btn,
-    section:first-of-type .btn {
-        animation: fadeInUp 2s ease-out;
-        animation-delay: 1.2s;
-        opacity: 0;
-        animation-fill-mode: forwards;
-    }
-
-    /* Définition de l'animation */
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Icônes du panier ULTRA visibles */
-    .custom-navbar-cta .nav-link {
-        filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.9)) drop-shadow(0 5px 15px rgba(0, 0, 0, 0.7));
+    /* Icônes panier */
+    .custom-navbar-cta img {
+        filter: brightness(0) invert(1);
+        width: 24px;
+        height: 24px;
         transition: all 0.3s ease;
     }
 
-    .custom-navbar-cta img {
-        filter: brightness(0) invert(1) drop-shadow(0 3px 8px rgba(0, 0, 0, 0.9)) drop-shadow(0 5px 15px rgba(0, 0, 0, 0.7));
-        opacity: 1;
-        width: 24px;
-        height: 24px;
-    }
-
-    .custom-navbar-cta .nav-link:hover img {
-        filter: brightness(0) invert(1) drop-shadow(0 4px 12px rgba(249, 191, 41, 0.8)) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.9));
+    .custom-navbar-cta img:hover {
+        filter: brightness(1) drop-shadow(0 0 10px #f9bf29);
         transform: scale(1.1);
     }
 
-    /* Bouton toggle pour mobile */
-    .navbar-toggler {
-        border: 2px solid rgba(255, 255, 255, 0.9) !important;
-        padding: 8px 12px;
-        background: rgba(0, 0, 0, 0.3);
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    .navbar-toggler:hover {
-        background: rgba(0, 0, 0, 0.5);
-        border-color: #f9bf29 !important;
-    }
-
-    .navbar-toggler-icon {
-        filter: brightness(0) invert(1) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.8));
-    }
-
-    /* Menu collapse sur mobile aussi visible */
+    /* Mobile */
     @media (max-width: 991px) {
         .navbar-collapse {
             background: rgba(0, 0, 0, 0.85);
             padding: 20px;
             border-radius: 8px;
-            margin-top: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
         }
 
         .custom-navbar-nav .nav-link {
@@ -322,6 +231,10 @@
         }
     }
 </style>
+
+
+
+
 
 <script>
     // Header disparaît quand on scroll vers le bas

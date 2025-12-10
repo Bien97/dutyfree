@@ -4,39 +4,163 @@
 
 @section('content')
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+
     <style>
         .btn-explorer {
             background: #ADD8E6 !important;
             border: 2px solid #ADD8E6 !important;
             color: #003d7a !important;
-            transition: 0.3s ease;
-        }
-      
-        .btn-explorer:hover {
-            background: transparent !important;
-            color: #ADD8E6 !important;
+            transition: all 0.3s ease;
+            /* transition plus rapide et discrète */
         }
 
-        .home-hero-offset { padding-top: 160px; }
-        @media (max-width: 991px) { .home-hero-offset { padding-top: 120px; } }
+        /* Effet hover plus subtil */
+        .btn-explorer:hover {
+            background: #003d7a !important;
+            /* fond sombre pour contraste */
+            color: #fff !important;
+            /* texte blanc */
+            transform: scale(1.05);
+            /* léger agrandissement */
+            box-shadow: 0 4px 10px rgba(0, 61, 122, 0.3);
+            /* ombre plus douce */
+        }
+
+
+        /* ============================================
+                       BOUTON SCROLL TO TOP AVEC PROGRESSION
+                       ============================================ */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #003d7a;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 4px 20px rgba(0, 61, 122, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        .scroll-to-top:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(0, 61, 122, 0.5);
+        }
+
+        .scroll-to-top:active {
+            transform: scale(0.95);
+        }
+
+        /* Icône flèche */
+        .scroll-icon {
+            position: absolute;
+            color: #ffffff;
+            font-size: 20px;
+            z-index: 2;
+            animation: bounceUp 2s infinite;
+        }
+
+        /* Cercle de progression SVG */
+        .progress-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.1s;
+            stroke-linecap: round;
+        }
+
+        /* Animation de la flèche */
+        @keyframes bounceUp {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Responsive mobile */
+        @media (max-width: 768px) {
+            .scroll-to-top {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .progress-ring {
+                width: 50px;
+                height: 50px;
+            }
+
+            .progress-ring-circle {
+                r: 22;
+                cx: 25;
+                cy: 25;
+            }
+
+            .scroll-icon {
+                font-size: 18px;
+            }
+        }
+
+        /* Variante couleur alternative au scroll */
+        .scroll-to-top.scrolled {
+            background: #ff8c00;
+        }
+
+        .scroll-to-top.scrolled .scroll-icon {
+            animation: bounceUp 1.5s infinite;
+        }
+
+        /* Fix dimensions for product images */
+        .product-thumbnail {
+            height: 250px;
+            width: 100%;
+            object-fit: contain;
+        }
     </style>
 
     <!-- Start Hero Section -->
     <div class="hero"
         style="background: url('{{ asset('assets/images/pexels-tuurt-2954405.jpg') }}') no-repeat center center; background-size: cover;">
-        <div class="container home-hero-offset">
+        <div class="container">
             <div class="row justify-content-between">
                 <div class="col-lg-5">
                     <div class="intro-excerpt">
                         <h1>DutyFree Express <span class="d-block">Réservez avant votre vol</span></h1>
-                        <p class="mb-4">
-                            Précommandez vos produits Duty Free en ligne et récupérez-les directement à l’aéroport.
+                        <p class="mb-4" style="font-size: 1.1rem; line-height: 1.1;">
+                            Précommandez vos produits Duty Free en ligne et récupérez-les directement à l'aéroport.
                             Rapide, simple et sans paiement en ligne.
                         </p>
 
                         <p>
-                            <a href="{{ route('shop') }}" class="btn btn-secondary me-2">Acheter maintenant</a>
-                            {{-- <a href="#" class="btn btn-white-outline">Explorer</a> --}}
+                            <a href="{{ route('shop') }}" class="btn btn-secondary me-2"
+                                style="font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 1rem;">
+                                Acheter maintenant
+                            </a>
                         </p>
 
                     </div>
@@ -49,7 +173,6 @@
             </div>
         </div>
     </div>
-
     <!-- End Hero Section -->
 
     <!-- Start Product Section -->
@@ -62,54 +185,25 @@
                     <h2 class="mb-4 section-title">Des produits de marques prestigieuses.</h2>
                     <p class="mb-4">
                         Découvrez une sélection exclusive de parfums, alcools, chocolats et accessoires.
-                        Qualité authentique, prix Duty Free et retrait rapide à l’aéroport.
+                        Qualité authentique, prix Duty Free et retrait rapide à l'aéroport.
                     </p>
                     <p><a href="{{ route('shop') }}" class="btn btn-explorer">Explorer</a></p>
                 </div>
-
                 <!-- End Column 1 -->
 
-                <!-- Start Column 2 -->
-                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                    <a class="product-item" href="{{ route('cart') }}">
-                        <img src="{{ asset('assets/images/products/2053-removebg-preview_cropped.png') }}" class="img-fluid product-thumbnail"
-                            alt="Product 1">
-                        <h3 class="product-title">Nordic Chair</h3>
-                        <strong class="product-price">$50.00</strong>
-                        <span class="icon-cross">
-                            <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Cross">
-                        </span>
-                    </a>
-                </div>
-                <!-- End Column 2 -->
-
-                <!-- Start Column 3 -->
-                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                    <a class="product-item" href="{{ route('cart') }}">
-                        <img src="{{ asset('assets/images/products/front-view-black-fragrance-with-golden-cap-white-isolated-desk-removebg-preview_cropped.png') }}" class="img-fluid product-thumbnail"
-                            alt="Product 2">
-                        <h3 class="product-title">Kruzo Aero Chair</h3>
-                        <strong class="product-price">$78.00</strong>
-                        <span class="icon-cross">
-                            <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Cross">
-                        </span>
-                    </a>
-                </div>
-                <!-- End Column 3 -->
-
-                <!-- Start Column 4 -->
-                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                    <a class="product-item" href="{{ route('cart') }}">
-                        <img src="{{ asset('assets/images/products/28815-removebg-preview_cropped.png') }}" class="img-fluid product-thumbnail"
-                            alt="Product 3">
-                        <h3 class="product-title">Ergonomic Chair</h3>
-                        <strong class="product-price">$43.00</strong>
-                        <span class="icon-cross">
-                            <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Cross">
-                        </span>
-                    </a>
-                </div>
-                <!-- End Column 4 -->
+                @foreach ($products as $product)
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="{{ route('cart') }}">
+                            <img src="{{ asset($product->image_path) }}" class="img-fluid product-thumbnail"
+                                alt="{{ $product->name }}">
+                            <h3 class="product-title">{{ $product->name }}</h3>
+                            <strong class="product-price">${{ $product->price }}</strong>
+                            <span class="icon-cross">
+                                <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Cross">
+                            </span>
+                        </a>
+                    </div>
+                @endforeach
 
             </div>
         </div>
@@ -122,8 +216,8 @@
             <div class="row justify-content-between">
                 <div class="col-lg-6">
                     <h2 class="section-title">Pourquoi nous choisir ?</h2>
-                    <p>Précommandez vos produits Duty Free en ligne et récupérez-les directement à l’aéroport.
-                        Simple, rapide et sécurisé — aucun paiement en ligne requis.</p>
+                    <p>Précommandez vos produits Duty Free en ligne et récupérez-les directement à l'aéroport.
+                        Simple, rapide et sécurisé – aucun paiement en ligne requis.</p>
 
                     <div class="row my-5">
                         <div class="col-6 col-md-6">
@@ -131,7 +225,7 @@
                                 <div class="icon">
                                     <img src="{{ asset('assets/images/truck.svg') }}" alt="Image" class="img-fluid">
                                 </div>
-                                <h3>Retrait rapide à l’aéroport</h3>
+                                <h3>Retrait rapide à l'aéroport</h3>
                                 <p>Réservez vos produits en ligne et récupérez-les au comptoir sans attendre.</p>
                             </div>
                         </div>
@@ -173,7 +267,8 @@
 
                 <div class="col-lg-5">
                     <div class="img-wrap">
-                        <img src="{{ asset('assets/images/pexels-magda-ehlers-pexels-2861656_1_cropped.png') }}" alt="Image" class="img-fluid">
+                        <img src="{{ asset('assets/images/pexels-magda-ehlers-pexels-2861656_1_cropped.png') }}"
+                            alt="Image" class="img-fluid">
                     </div>
                 </div>
 
@@ -189,13 +284,16 @@
                 <div class="col-lg-7 mb-5 mb-lg-0">
                     <div class="imgs-grid">
                         <div class="grid grid-1">
-                            <img src="{{ asset('assets/images/bellboy-tipped-by-company-executives_cropped.jpg') }}" alt="Untree.co" class="img-fluid">
+                            <img src="{{ asset('assets/images/bellboy-tipped-by-company-executives_cropped.jpg') }}"
+                                alt="Untree.co" class="img-fluid">
                         </div>
                         <div class="grid grid-2">
-                            <img src="{{ asset('assets/images/10945220_cropped.jpg') }}" alt="Untree.co" class="img-fluid">
+                            <img src="{{ asset('assets/images/10945220_cropped.jpg') }}" alt="Untree.co"
+                                class="img-fluid">
                         </div>
                         <div class="grid grid-3">
-                            <img src="{{ asset('assets/images/pexels-karola-g-5239881_cropped.jpg') }}" alt="Untree.co" class="img-fluid">
+                            <img src="{{ asset('assets/images/pexels-karola-g-5239881_cropped.jpg') }}" alt="Untree.co"
+                                class="img-fluid">
                         </div>
                     </div>
                 </div>
@@ -203,13 +301,13 @@
                     <h2 class="section-title mb-4">Précommandez vos produits Duty Free facilement</h2>
                     <p>
                         Parcourez notre catalogue de parfums, alcools, chocolats et accessoires, sélectionnés pour
-                        les voyageurs. Réservez vos articles en ligne et récupérez-les rapidement à l’aéroport,
+                        les voyageurs. Réservez vos articles en ligne et récupérez-les rapidement à l'aéroport,
                         sans paiement en ligne.
                     </p>
 
                     <ul class="list-unstyled custom-list my-4">
                         <li>Précommande simple et rapide en quelques clics</li>
-                        <li>Retrait direct au comptoir à l’aéroport</li>
+                        <li>Retrait direct au comptoir à l'aéroport</li>
                         <li>Sélection des meilleures marques Duty Free</li>
                         <li>Flexibilité et modifications possibles avant le retrait</li>
                     </ul>
@@ -220,56 +318,6 @@
         </div>
     </div>
     <!-- End We Help Section -->
-
-    <!-- Start Popular Product -->
-    {{-- <div class="popular-product">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
-                    <div class="product-item-sm d-flex">
-                        <div class="thumbnail">
-                            <img src="{{ asset('assets/images/product-1.png') }}" alt="Parfum" class="img-fluid">
-                        </div>
-                        <div class="pt-3">
-                            <h3>Parfum Oriental</h3>
-                            <p>Un parfum élégant et sophistiqué, idéal pour voyager léger et sentir bon à l’arrivée.</p>
-                            <p><a href="#">Voir le produit</a></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
-                    <div class="product-item-sm d-flex">
-                        <div class="thumbnail">
-                            <img src="{{ asset('assets/images/product-2.png') }}" alt="Chocolat" class="img-fluid">
-                        </div>
-                        <div class="pt-3">
-                            <h3>Chocolat Gourmet</h3>
-                            <p>Délices chocolatés à prix Duty Free, parfaits pour offrir ou savourer avant le vol.</p>
-                            <p><a href="#">Voir le produit</a></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-0">
-                    <div class="product-item-sm d-flex">
-                        <div class="thumbnail">
-                            <img src="{{ asset('assets/images/product-3.png') }}" alt="Alcool" class="img-fluid">
-                        </div>
-                        <div class="pt-3">
-                            <h3>Whisky Édition Limitée</h3>
-                            <p>Whisky premium à prix Duty Free, à retirer facilement au comptoir de l’aéroport.</p>
-                            <p><a href="#">Voir le produit</a></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </div> --}}
-    <!-- End Popular Product -->
 
     <!-- Start Testimonial Slider -->
     <div class="testimonial-section">
@@ -296,8 +344,8 @@
                                     <div class="col-lg-8 mx-auto">
                                         <div class="testimonial-block text-center">
                                             <blockquote class="mb-5">
-                                                <p>&ldquo;J’ai réservé mes parfums en ligne et tout était prêt à mon arrivée
-                                                    à l’aéroport.
+                                                <p>&ldquo;J'ai réservé mes parfums en ligne et tout était prêt à mon arrivée
+                                                    à l'aéroport.
                                                     Service rapide, efficace et sans tracas. Je recommande vivement !&rdquo;
                                                 </p>
                                             </blockquote>
@@ -321,8 +369,8 @@
                                     <div class="col-lg-8 mx-auto">
                                         <div class="testimonial-block text-center">
                                             <blockquote class="mb-5">
-                                                <p>&ldquo;Le retrait à l’aéroport a été un jeu d’enfant. J’ai économisé du
-                                                    temps et j’ai eu mes chocolats préférés. Très pratique !&rdquo;</p>
+                                                <p>&ldquo;Le retrait à l'aéroport a été un jeu d'enfant. J'ai économisé du
+                                                    temps et j'ai eu mes chocolats préférés. Très pratique !&rdquo;</p>
                                             </blockquote>
 
                                             <div class="author-info">
@@ -331,7 +379,7 @@
                                                         alt="Jean Dupont" class="img-fluid">
                                                 </div>
                                                 <h3 class="font-weight-bold">Jean Dupont</h3>
-                                                <span class="position d-block mb-3">Voyageur d’affaires</span>
+                                                <span class="position d-block mb-3">Voyageur d'affaires</span>
                                             </div>
                                         </div>
                                     </div>
@@ -345,7 +393,7 @@
                                         <div class="testimonial-block text-center">
                                             <blockquote class="mb-5">
                                                 <p>&ldquo;Service impeccable ! La précommande en ligne est super simple et
-                                                    le personnel à l’aéroport était très accueillant. Je le referai à chaque
+                                                    le personnel à l'aéroport était très accueillant. Je le referai à chaque
                                                     voyage.&rdquo;</p>
                                             </blockquote>
 
@@ -370,71 +418,86 @@
             </div>
         </div>
     </div>
-
     <!-- End Testimonial Slider -->
 
-    <!-- Start Blog Section -->
-    {{-- <div class="blog-section">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-md-6">
-                    <h2 class="section-title">Recent Blog</h2>
-                </div>
-                <div class="col-md-6 text-start text-md-end">
-                    <a href="#" class="more">View All Posts</a>
-                </div>
-            </div>
+    <!-- Bouton Scroll to Top avec indicateur de progression -->
+    <div id="scrollToTop" class="scroll-to-top">
+        <svg class="progress-ring" width="60" height="60">
+            <circle class="progress-ring-circle" stroke="#ff8c00" stroke-width="3" fill="transparent" r="27"
+                cx="30" cy="30" />
+        </svg>
+        <i class="fa fa-chevron-up scroll-icon"></i>
+    </div>
 
-            <div class="row">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollBtn = document.getElementById('scrollToTop');
+            const progressCircle = document.querySelector('.progress-ring-circle');
 
-                <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
-                    <div class="post-entry">
-                        <a href="#" class="post-thumbnail">
-                            <img src="{{ asset('assets/images/post-1.jpg') }}" alt="Image" class="img-fluid">
-                        </a>
-                        <div class="post-content-entry">
-                            <h3><a href="#">First Time Home Owner Ideas</a></h3>
-                            <div class="meta">
-                                <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 19,
-                                        2021</a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            // Calculer la circonférence du cercle
+            const radius = progressCircle.r.baseVal.value;
+            const circumference = 2 * Math.PI * radius;
 
-                <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
-                    <div class="post-entry">
-                        <a href="#" class="post-thumbnail">
-                            <img src="{{ asset('assets/images/post-2.jpg') }}" alt="Image" class="img-fluid">
-                        </a>
-                        <div class="post-content-entry">
-                            <h3><a href="#">How To Keep Your Furniture Clean</a></h3>
-                            <div class="meta">
-                                <span>by <a href="#">Robert Fox</a></span> <span>on <a href="#">Dec 15,
-                                        2021</a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            // Initialiser le stroke-dasharray
+            progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+            progressCircle.style.strokeDashoffset = circumference;
 
-                <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
-                    <div class="post-entry">
-                        <a href="#" class="post-thumbnail">
-                            <img src="{{ asset('assets/images/post-3.jpg') }}" alt="Image" class="img-fluid">
-                        </a>
-                        <div class="post-content-entry">
-                            <h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
-                            <div class="meta">
-                                <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 12,
-                                        2021</a></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            // Fonction pour mettre à jour la progression
+            function updateProgress() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercent = scrollTop / docHeight;
 
-            </div>
-        </div>
-    </div> --}}
-    <!-- End Blog Section -->
+                // Calculer l'offset du cercle
+                const offset = circumference - (scrollPercent * circumference);
+                progressCircle.style.strokeDashoffset = offset;
+
+                // Afficher/masquer le bouton
+                if (scrollTop > 300) {
+                    scrollBtn.classList.add('show');
+                } else {
+                    scrollBtn.classList.remove('show');
+                }
+
+                // Changer la couleur après 50% du scroll
+                if (scrollPercent > 0.5) {
+                    scrollBtn.classList.add('scrolled');
+                } else {
+                    scrollBtn.classList.remove('scrolled');
+                }
+            }
+
+            // Événement scroll
+            window.addEventListener('scroll', updateProgress);
+
+            // Clic sur le bouton - retour en haut smooth
+            scrollBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Initialiser au chargement
+            updateProgress();
+        });
+    </script>
+
+    <style>
+        /* Définir la police de tout le site */
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* ou une autre police */
+        }
+
+        /* Si tu veux juste une section précise */
+        .hero,
+        .product-section,
+        .footer-section {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+
+
 
 @endsection

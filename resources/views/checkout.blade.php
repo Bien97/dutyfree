@@ -9,12 +9,20 @@
             background: #ADD8E6 !important;
             border: 2px solid #ADD8E6 !important;
             color: #003d7a !important;
-            transition: 0.3s ease;
+            transition: all 0.3s ease;
+            /* transition plus rapide et discrète */
         }
 
+        /* Effet hover plus subtil */
         .btn-explorer:hover {
-            background: transparent !important;
-            color: #ADD8E6 !important;
+            background: #003d7a !important;
+            /* fond sombre pour contraste */
+            color: #fff !important;
+            /* texte blanc */
+            transform: scale(1.05);
+            /* léger agrandissement */
+            box-shadow: 0 4px 10px rgba(0, 61, 122, 0.3);
+            /* ombre plus douce */
         }
     </style>
 
@@ -208,6 +216,21 @@
             document.getElementById("bloc_livraison").style.display = this.checked ? "block" : "none";
         });
     </script>
+
+    <style>
+        /* Définir la police de tout le site */
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* ou une autre police */
+        }
+
+        /* Si tu veux juste une section précise */
+        .hero,
+        .product-section,
+        .footer-section {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 
 
 @endsection

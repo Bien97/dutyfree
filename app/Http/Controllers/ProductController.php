@@ -127,4 +127,10 @@ class ProductController extends Controller
             ->route('admin.products.index')
             ->with('success', 'Produit supprimé avec succès.');
     }
+    public function randomProduit()
+    {
+        $products = product::inRandomOrder()->take(3)->get();
+
+        return view('home', compact('products'));
+    }
 }
