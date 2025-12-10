@@ -7,6 +7,8 @@
 <style>
     .shop-hero-offset { padding-top: 160px; }
     @media (max-width: 991px) { .shop-hero-offset { padding-top: 120px; } }
+    .product-thumbnail { width: 100%; height: 260px; object-fit: contain; object-position: center top; background-color: #ffffff; }
+    @media (min-width: 1200px) { .product-thumbnail { height: 300px; } }
 </style>
  <div class="hero"
         style="background: url('{{ asset('assets/images/pexels-mikhail-nilov-6969962.jpg') }}') no-repeat center center !important; 

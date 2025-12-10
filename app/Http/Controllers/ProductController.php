@@ -7,6 +7,7 @@ use App\Models\product;
 use App\Models\category;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ImageService;
 
 class ProductController extends Controller
 {
@@ -48,11 +49,9 @@ class ProductController extends Controller
 
         // Gestion de l'image: priorité à l'upload, sinon chemin fourni
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image_path'] = Storage::url($path); // /storage/products/...
+            $validated['image_path'] = ImageService::resizeAndStore($request->file('image'));
         } elseif ($request->filled('image_path')) {
-            
-            $validated['image_path'] = $request->string('image_path');
+            $validated['image_path'] = (string) $request->input('image_path');
         }
 
         product::create($validated);
@@ -104,10 +103,9 @@ class ProductController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image_path'] = Storage::url($path);
+            $validated['image_path'] = ImageService::resizeAndStore($request->file('image'));
         } elseif ($request->filled('image_path')) {
-            $validated['image_path'] = $request->string('image_path');
+            $validated['image_path'] = (string) $request->input('image_path');
         }
 
         $product->update($validated);
