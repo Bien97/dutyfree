@@ -63,9 +63,9 @@
                         <h5 style="font-weight: 600 !important; margin-bottom: 1rem !important; color: #2f2f2f !important;">Suivez-nous</h5>
                         <p style="margin-bottom: 0.5rem !important; color: #6c757d !important; font-size: 0.9rem !important;">Restez connecté avec DutyFree Express</p>
                         <ul class="list-unstyled custom-social" style="margin-top: 1rem !important;">
-                            <li><a href="#"><span class="fa fa-brands fa-facebook-f"></span></a></li>
-                            <li><a href="#"><span class="fa fa-brands fa-twitter"></span></a></li>
-                            <li><a href="#"><span class="fa fa-brands fa-instagram"></span></a></li>
+                            <li><a href="https://www.facebook.com"><span class="fa fa-brands fa-facebook-f"></span></a></li>
+                            <li><a href="https://twitter.com"><span class="fa fa-brands fa-twitter"></span></a></li>
+                            <li><a href="https://www.instagram.com"><span class="fa fa-brands fa-instagram"></span></a></li>
                         </ul>
                         <style>
                             .custom-social li a:hover span {
