@@ -508,10 +508,14 @@ section:first-of-type .btn {
     padding: 7rem 0;
 }
 .we-help-section .imgs-grid {
+<<<<<<< HEAD
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: (1fr) [27];
     display: grid;
+=======
+    display: grid;
+>>>>>>> 6ff35c096c90e5732c2012e3d84da7812b413d47
     grid-template-columns: repeat(27, 1fr);
     position: relative;
 }

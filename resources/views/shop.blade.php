@@ -114,14 +114,33 @@ document.addEventListener('DOMContentLoaded', () => {
             ? `/api/v1/search${buildQuery({ input: query || '', category_id: categoryId || '' })}`
             : `/api/v1/products`;
 
-        container.innerHTML = '<div class="col-12 text-center py-5">Chargement des produits...</div>';
+                container.innerHTML = '<div class="col-12 text-center py-5">Chargement des produits...</div>';
 
-        try {
-            const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-            const json = await res.json();
+                try {
+                    const res = await fetch(url, {
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    const json = await res.json();
 
-            if (!json.success) {
-                throw new Error(json.message || 'Erreur lors de la récupération des produits.');
+                    if (!json.success) {
+                        throw new Error(json.message || 'Erreur lors de la récupération des produits.');
+                    }
+
+                    const products = json.data || [];
+
+                    if (!products.length) {
+                        container.innerHTML =
+                            '<div class="col-12 text-center py-5">Aucun produit trouvé pour cette catégorie.</div>';
+                        return;
+                    }
+
+                    container.innerHTML = products.map(p => renderProductCard(p)).join('');
+                } catch (e) {
+                    container.innerHTML =
+                        `<div class="col-12 text-center text-danger py-5">Erreur: ${e.message}</div>`;
+                }
             }
 
             let products = json.data || [];
@@ -188,13 +207,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     </span>
                 </a>
             </div>
+        </div>
         `;
-    }
+            }
 
-    function formatPrice(value) {
-        const num = Number(value);
-        return isNaN(num) ? '0.00' : num.toFixed(2);
-    }
+            function formatPrice(value) {
+                const num = Number(value);
+                return isNaN(num) ? '0.00' : num.toFixed(2);
+            }
 
     function escapeHtml(str) {
         return String(str)
