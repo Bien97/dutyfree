@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class ContactController extends Controller
 {
@@ -19,17 +20,27 @@ class ContactController extends Controller
             'g-recaptcha-response' => 'required',
         ]);
 
-        // Vérification reCaptcha (SSL actif pour production)
-        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => env('RECAPTCHA_SECRET_KEY'),
-            'response' => $request->input('g-recaptcha-response'),
-            'remoteip' => $request->ip(),
-        ]);
+        // Vérification reCaptcha (production)
+        try {
+            $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                'secret' => env('RECAPTCHA_SECRET_KEY'),
+                'response' => $request->input('g-recaptcha-response'),
+                'remoteip' => $request->ip(),
+            ]);
 
-        $body = $response->json();
+            $body = $response->json();
 
-        if (!isset($body['success']) || $body['success'] != true) {
-            return back()->withErrors(['captcha' => 'Échec de la validation reCaptcha, essayez à nouveau.'])->withInput();
+            if (!isset($body['success']) || $body['success'] != true) {
+                return back()->withErrors(['captcha' => 'Échec de la validation reCaptcha, essayez à nouveau.'])->withInput();
+            }
+        } catch (\Exception $e) {
+            Log::error('Erreur reCAPTCHA production', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+
+            return back()->withErrors(['captcha' => 'Impossible de vérifier le reCaptcha pour le moment.'])->withInput();
         }
 
         // Préparer les données pour le mail
@@ -41,15 +52,28 @@ class ContactController extends Controller
         ];
 
         // Envoi du mail texte simple
-        Mail::raw(
-            "Nom : {$formData['name']}\nEmail : {$formData['email']}\nMessage : {$formData['message']}",
-            function ($mailMessage) use ($formData) {
-                $mailMessage->to(env('CONTACT_RECIPIENT_EMAIL', 'mjledondedieu@gmail.com'), env('CONTACT_RECIPIENT_NAME', 'Archipel Duty Free'))
-                    ->subject($formData['subject'])
-                    ->from(env('MAIL_FROM_ADDRESS', 'mjledondedieu@gmail.com'), env('MAIL_FROM_NAME', 'Archipel Duty Free'))
-                    ->replyTo($formData['email'], $formData['name']);
-            }
-        );
+        try {
+            Mail::raw(
+                "Nom : {$formData['name']}\nEmail : {$formData['email']}\nMessage : {$formData['message']}",
+                function ($mailMessage) use ($formData) {
+                    $mailMessage->to(env('CONTACT_RECIPIENT_EMAIL'), env('CONTACT_RECIPIENT_NAME'))
+                        ->subject($formData['subject'])
+                        ->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+                        ->replyTo($formData['email'], $formData['name']);
+                }
+            );
+        } catch (\Exception $e) {
+            Log::error('Erreur SMTP production', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'formData' => $formData
+            ]);
+
+            return back()->withErrors([
+                'mail' => 'Une erreur est survenue lors de l\'envoi de votre message. Veuillez réessayer plus tard.'
+            ]);
+        }
 
         return back()->with('success', 'Votre message a été envoyé avec succès !');
     }
