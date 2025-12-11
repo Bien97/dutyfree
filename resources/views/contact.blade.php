@@ -186,7 +186,7 @@
                             </div>
 
                             <!-- reCaptcha case à cocher -->
-                            <div class="g-recaptcha" data-sitekey="6LeXviYsAAAAAI_sT9ianWRoU5WPe2lxZOoPf5iG"></div>
+                            <div class="g-recaptcha" data-sitekey="6LdwcScsAAAAADBEqqBlNwhlkwFUeJZL83ODGaNl"></div>
 
                             <button type="submit" class="btn btn-explorer mt-3">Envoyer un message</button>
                         </form>
