@@ -197,7 +197,7 @@
                             <img src="{{ asset($product->image_path) }}" class="img-fluid product-thumbnail"
                                 alt="{{ $product->name }}">
                             <h3 class="product-title">{{ $product->name }}</h3>
-                            <strong class="product-price">${{ $product->price }}</strong>
+                            <strong class="product-price">{{ $product->price }}F CFA</strong>
                             <span class="icon-cross">
                                 <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Cross">
                             </span>

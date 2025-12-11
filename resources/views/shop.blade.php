@@ -5,6 +5,19 @@
 @section('content')
 
 <style>
+    /* Définir la police de tout le site */
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* ou une autre police */
+        }
+
+        /* Si tu veux juste une section précise */
+        .hero,
+        .product-section,
+        .footer-section {
+            font-family: 'Poppins', sans-serif;
+        }
+
     .shop-hero-offset { padding-top: 160px; }
     @media (max-width: 991px) { .shop-hero-offset { padding-top: 120px; } }
     .product-thumbnail { width: 100%; height: 260px; object-fit: contain; object-position: center top; background-color: #ffffff; }
@@ -114,33 +127,14 @@ document.addEventListener('DOMContentLoaded', () => {
             ? `/api/v1/search${buildQuery({ input: query || '', category_id: categoryId || '' })}`
             : `/api/v1/products`;
 
-                container.innerHTML = '<div class="col-12 text-center py-5">Chargement des produits...</div>';
+        container.innerHTML = '<div class="col-12 text-center py-5">Chargement des produits...</div>';
 
-                try {
-                    const res = await fetch(url, {
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-                    const json = await res.json();
+        try {
+            const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+            const json = await res.json();
 
-                    if (!json.success) {
-                        throw new Error(json.message || 'Erreur lors de la récupération des produits.');
-                    }
-
-                    const products = json.data || [];
-
-                    if (!products.length) {
-                        container.innerHTML =
-                            '<div class="col-12 text-center py-5">Aucun produit trouvé pour cette catégorie.</div>';
-                        return;
-                    }
-
-                    container.innerHTML = products.map(p => renderProductCard(p)).join('');
-                } catch (e) {
-                    container.innerHTML =
-                        `<div class="col-12 text-center text-danger py-5">Erreur: ${e.message}</div>`;
-                }
+            if (!json.success) {
+                throw new Error(json.message || 'Erreur lors de la récupération des produits.');
             }
 
             let products = json.data || [];
@@ -198,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return `
             <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="#">
+                <a class="product-item" href="{{ route('cart') }}">
                     <img src="${imgSrc}" class="img-fluid product-thumbnail" alt="${escapeHtml(p.name || 'Produit')}">
                     <h3 class="product-title">${escapeHtml(p.name || '')}</h3>
                     <strong class="product-price">${formatPrice(p.price)}F CFA</strong>
@@ -207,14 +201,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     </span>
                 </a>
             </div>
-        </div>
         `;
-            }
+    }
 
-            function formatPrice(value) {
-                const num = Number(value);
-                return isNaN(num) ? '0.00' : num.toFixed(2);
-            }
+    function formatPrice(value) {
+        const num = Number(value);
+        return isNaN(num) ? '0.00' : num.toFixed(2);
+    }
 
     function escapeHtml(str) {
         return String(str)
