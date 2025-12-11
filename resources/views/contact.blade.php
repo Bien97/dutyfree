@@ -142,10 +142,11 @@
                                         </svg>
                                     </div>
                                     <div class="service-contents">
-                                        <p>
-                                            <a href="https://wa.me/22890862570" target="_blank">+228 90 86 25 70</a> /
-                                            <a href="https://wa.me/22899476525" target="_blank">+228 99 47 65 25</a>
+                                        <p style="white-space: nowrap;">
+                                            <a href="https://wa.me/22890862570" target="_blank">+228 9086 2570</a> /
+                                            <a href="https://wa.me/22899476525" target="_blank">+228 9947 6525</a>
                                         </p>
+
                                     </div>
                                 </div>
                             </div>
