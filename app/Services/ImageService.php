@@ -8,13 +8,19 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageService
 {
-    public static function resizeAndStore(UploadedFile $file, int $targetWidth = 600, int $targetHeight = 600): string
+    public static function resizeAndStore(
+        UploadedFile $file, 
+        string $folder = 'products',  // ← Ajouter ce paramètre
+        int $targetWidth = 600, 
+        int $targetHeight = 600
+    ): string
     {
         $mime = $file->getMimeType();
         $path = $file->getRealPath();
         $src = self::createImageResource($path, $mime);
+        
         if (!$src) {
-            $stored = $file->store('products', 'public');
+            $stored = $file->store($folder, 'public');  // ← Utiliser $folder
             return Storage::url($stored);
         }
 
@@ -26,6 +32,7 @@ class ImageService
 
         $dst = imagecreatetruecolor($targetWidth, $targetHeight);
         $isTransparent = str_contains(strtolower($mime), 'png') || str_contains(strtolower($mime), 'webp');
+        
         if ($isTransparent) {
             imagesavealpha($dst, true);
             $transparent = imagecolorallocatealpha($dst, 0, 0, 0, 127);
@@ -43,8 +50,10 @@ class ImageService
         if (!$ext) {
             $ext = str_contains($mime, 'png') ? 'png' : (str_contains($mime, 'webp') ? 'webp' : 'jpg');
         }
+        
         $filename = Str::uuid()->toString() . '.' . $ext;
-        $dir = Storage::disk('public')->path('products');
+        
+        $dir = Storage::disk('public')->path($folder);  // ← Utiliser $folder
         if (!is_dir($dir)) {
             @mkdir($dir, 0775, true);
         }
@@ -68,11 +77,16 @@ class ImageService
         imagedestroy($dst);
         imagedestroy($src);
 
-        return Storage::url('products/' . $filename);
+        return Storage::url($folder . '/' . $filename);  // ← Utiliser $folder
     }
 
     protected static function createImageResource(string $path, ?string $mime)
     {
+        // Vérifier si GD est disponible
+        if (!function_exists('imagecreatefromjpeg')) {
+            return null;
+        }
+        
         $m = strtolower((string) $mime);
         if (str_contains($m, 'jpeg') || str_contains($m, 'jpg')) {
             return @imagecreatefromjpeg($path);
@@ -86,4 +100,3 @@ class ImageService
         return null;
     }
 }
-

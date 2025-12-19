@@ -3,7 +3,8 @@
 
     <div class="container">
         <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('assets/images/dutyfree-logo-BRFPKRQG.png') }}" alt="DutyFree Express" height="80">
+            <img src="{{ asset($siteInfos['logo'] ?? 'assets/images/dutyfree-logo-BRFPKRQG.png') }}"
+                alt="{{ site_info('site_name', 'DutyFree Express') }}" height="80">
         </a>
 
 
@@ -124,7 +125,8 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: rgba(0, 0, 0, 0,5); /* intensité du sombre */
+        background: rgba(0, 0, 0, 0, 5);
+        /* intensité du sombre */
         z-index: 1;
     }
 

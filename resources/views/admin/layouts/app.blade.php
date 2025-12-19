@@ -226,14 +226,14 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#">
+                            <a class="nav-link menu-link" href="{{ route('admin.testimonials.index') }}">
                                 <i class="las la-comment-dots"></i>
                                 <span data-key="t-testimonials">Gestion des Témoignages</span>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="#">
+                            <a class="nav-link menu-link" href="{{ route('admin.site-infos.index') }}">
                                 <i class="las la-cog"></i>
                                 <span data-key="t-settings">Paramètres</span>
                             </a>

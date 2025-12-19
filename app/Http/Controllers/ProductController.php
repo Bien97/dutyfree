@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\product;
 use App\Models\category;
+use App\Models\Testimonial;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use App\Services\ImageService;
@@ -43,8 +44,8 @@ class ProductController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'stock' => ['required', 'integer', 'min:0'],
             'category_id' => ['required', 'exists:categories,id'],
-            'image' => ['nullable', 'image', 'max:2048'], 
-            'image_path' => ['nullable', 'string'],        
+            'image' => ['nullable', 'image', 'max:2048'],
+            'image_path' => ['nullable', 'string'],
         ]);
 
         // Gestion de l'image: priorité à l'upload, sinon chemin fourni
@@ -91,7 +92,9 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'name' => [
-                'required', 'string', 'max:255',
+                'required',
+                'string',
+                'max:255',
                 Rule::unique('products', 'name')->ignore($product->id),
             ],
             'description' => ['nullable', 'string'],
@@ -127,10 +130,20 @@ class ProductController extends Controller
             ->route('admin.products.index')
             ->with('success', 'Produit supprimé avec succès.');
     }
+
     public function randomProduit()
     {
-        $products = product::inRandomOrder()->take(3)->get();
+        $products = Product::inRandomOrder()->limit(3)->get();
+        $testimonials = Testimonial::latest()->get();
 
-        return view('home', compact('products'));
+        return view('home', compact('products', 'testimonials'));
+    }
+
+    // Pour la page ABOUT
+    public function about()
+    {
+        $testimonials = Testimonial::latest()->get();
+
+        return view('about', compact('testimonials'));
     }
 }

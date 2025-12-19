@@ -83,7 +83,7 @@
                                     </div>
 
                                     <div class="service-contents">
-                                        <p>Lomé, Togo</p>
+                                        <p>{{ $siteInfos['address'] ?? 'Valeur par défaut' }}</p>
                                     </div>
                                 </a>
                             </div>
@@ -126,7 +126,7 @@
                                         </svg>
                                     </div>
                                     <div class="service-contents">
-                                        <p>contact@dutyfree.com</p>
+                                        <p>{{ $siteInfos['email'] ?? 'Valeur par défaut' }}</p>
                                     </div>
                                 </a>
                             </div>
@@ -143,8 +143,21 @@
                                     </div>
                                     <div class="service-contents">
                                         <p style="white-space: nowrap;">
-                                            <a href="https://wa.me/22890862570" target="_blank">+228 9086 2570</a> /
-                                            <a href="https://wa.me/22899476525" target="_blank">+228 9947 6525</a>
+                                            @php
+                                                $phones = explode(
+                                                    ' / ',
+                                                    $siteInfos['phone'] ?? '+228 9086 2570 / +228 9947 6525',
+                                                );
+                                            @endphp
+                                            @foreach ($phones as $index => $phone)
+                                                <a href="https://wa.me/{{ str_replace([' ', '+'], '', $phone) }}"
+                                                    target="_blank">
+                                                    {{ trim($phone) }}
+                                                </a>
+                                                @if ($index < count($phones) - 1)
+                                                    /
+                                                @endif
+                                            @endforeach
                                         </p>
 
                                     </div>
@@ -216,8 +229,8 @@
                                     setTimeout(() => {
                                         successMsg.style.transition = 'opacity 0.5s ease';
                                         successMsg.style.opacity = '0';
-                                        setTimeout(() => successMsg.remove(), 500); // supprime après la transition
-                                    }, 5000); // 3000ms = 3 secondes
+                                        setTimeout(() => successMsg.remove(), 500);
+                                    }, 10000); // 10000ms = 10 secondes
                                 }
                             });
                         </script>

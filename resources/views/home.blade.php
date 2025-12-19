@@ -30,8 +30,8 @@
 
 
         /* ============================================
-                       BOUTON SCROLL TO TOP AVEC PROGRESSION
-                       ============================================ */
+                           BOUTON SCROLL TO TOP AVEC PROGRESSION
+                           ============================================ */
         .scroll-to-top {
             position: fixed;
             bottom: 30px;
@@ -152,8 +152,7 @@
                     <div class="intro-excerpt">
                         <h1>DutyFree Express <span class="d-block">Réservez avant votre vol</span></h1>
                         <p class="mb-4" style="font-size: 1.1rem; line-height: 1.1;">
-                            Précommandez vos produits Duty Free en ligne et récupérez-les directement à l'aéroport.
-                            Rapide, simple et sans paiement en ligne.
+                            {{ $siteInfos['site_description'] ?? 'Valeur par défaut' }}
                         </p>
 
                         <p>
@@ -288,8 +287,7 @@
                                 alt="Untree.co" class="img-fluid">
                         </div>
                         <div class="grid grid-2">
-                            <img src="{{ asset('assets/images/10945220_cropped.jpg') }}" alt="Untree.co"
-                                class="img-fluid">
+                            <img src="{{ asset('assets/images/10945220_cropped.jpg') }}" alt="Untree.co" class="img-fluid">
                         </div>
                         <div class="grid grid-3">
                             <img src="{{ asset('assets/images/pexels-karola-g-5239881_cropped.jpg') }}" alt="Untree.co"
@@ -338,79 +336,67 @@
                         </div>
 
                         <div class="testimonial-slider">
+                            @forelse($testimonials as $testimonial)
+                                <div class="item">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-8 mx-auto">
+                                            <div class="testimonial-block text-center">
+                                                <blockquote class="mb-5">
+                                                    <p>&ldquo;{{ $testimonial->text }}&rdquo;</p>
+                                                </blockquote>
 
-                            <div class="item">
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-8 mx-auto">
-                                        <div class="testimonial-block text-center">
-                                            <blockquote class="mb-5">
-                                                <p>&ldquo;J'ai réservé mes parfums en ligne et tout était prêt à mon arrivée
-                                                    à l'aéroport.
-                                                    Service rapide, efficace et sans tracas. Je recommande vivement !&rdquo;
-                                                </p>
-                                            </blockquote>
+                                                <div class="author-info">
+                                                    <div class="author-pic">
+                                                        @php
+                                                            $imagePath =
+                                                                $testimonial->image ?: 'assets/images/person-1.png';
+                                                            // Si l'image commence par /storage/, c'est une URL complète
+                                                            if (str_starts_with($imagePath, '/storage/')) {
+                                                                $imageUrl = asset($imagePath);
+                                                            } elseif (filter_var($imagePath, FILTER_VALIDATE_URL)) {
+                                                                // Si c'est déjà une URL complète
+                                                                $imageUrl = $imagePath;
+                                                            } else {
+                                                                // Sinon, utiliser asset()
+                                                                $imageUrl = asset($imagePath);
+                                                            }
+                                                        @endphp
+                                                        <img src="{{ $imageUrl }}" alt="{{ $testimonial->name }}"
+                                                            class="img-fluid"
+                                                            style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                                                    </div>
+                                                    <h3 class="font-weight-bold">{{ $testimonial->name }}</h3>
+                                                    <span
+                                                        class="position d-block mb-3">{{ $testimonial->position ?? 'Client' }}</span>
 
-                                            <div class="author-info">
-                                                <div class="author-pic">
-                                                    <img src="{{ asset('assets/images/person-1.png') }}"
-                                                        alt="Sophie Martin" class="img-fluid">
+                                                    {{-- Affichage des étoiles --}}
+                                                    <div class="stars mb-3">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $testimonial->stars)
+                                                                <i class="fas fa-star text-warning"></i>
+                                                            @else
+                                                                <i class="far fa-star text-muted"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </div>
                                                 </div>
-                                                <h3 class="font-weight-bold">Sophie Martin</h3>
-                                                <span class="position d-block mb-3">Voyageuse fréquente</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- END item -->
-
-                            <div class="item">
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-8 mx-auto">
-                                        <div class="testimonial-block text-center">
-                                            <blockquote class="mb-5">
-                                                <p>&ldquo;Le retrait à l'aéroport a été un jeu d'enfant. J'ai économisé du
-                                                    temps et j'ai eu mes chocolats préférés. Très pratique !&rdquo;</p>
-                                            </blockquote>
-
-                                            <div class="author-info">
-                                                <div class="author-pic">
-                                                    <img src="{{ asset('assets/images/person-1.png') }}"
-                                                        alt="Jean Dupont" class="img-fluid">
-                                                </div>
-                                                <h3 class="font-weight-bold">Jean Dupont</h3>
-                                                <span class="position d-block mb-3">Voyageur d'affaires</span>
+                                <!-- END item -->
+                            @empty
+                                {{-- Message si aucun témoignage --}}
+                                <div class="item">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-8 mx-auto">
+                                            <div class="testimonial-block text-center">
+                                                <p class="text-muted">Aucun témoignage disponible pour le moment.</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- END item -->
-
-                            <div class="item">
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-8 mx-auto">
-                                        <div class="testimonial-block text-center">
-                                            <blockquote class="mb-5">
-                                                <p>&ldquo;Service impeccable ! La précommande en ligne est super simple et
-                                                    le personnel à l'aéroport était très accueillant. Je le referai à chaque
-                                                    voyage.&rdquo;</p>
-                                            </blockquote>
-
-                                            <div class="author-info">
-                                                <div class="author-pic">
-                                                    <img src="{{ asset('assets/images/person-1.png') }}"
-                                                        alt="Emma Lefevre" class="img-fluid">
-                                                </div>
-                                                <h3 class="font-weight-bold">Emma Lefevre</h3>
-                                                <span class="position d-block mb-3">Voyageuse régulière</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END item -->
-
+                            @endforelse
                         </div>
 
                     </div>
