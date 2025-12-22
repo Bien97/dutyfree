@@ -131,7 +131,7 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <a class="dropdown-item" href=""><i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
+                        <a class="dropdown-item" href="{{ route('home') }}"><i class="mdi mdi-web text-muted fs-16 align-middle me-1"></i> <span class="align-middle">Accéder au site</span></a>
                         <a class="dropdown-item" href="{{ route('logout') }}"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span class="align-middle" data-key="t-logout">Logout</span></a>
                     </div>
                 </div>
@@ -229,6 +229,12 @@
                             <a class="nav-link menu-link" href="{{ route('admin.testimonials.index') }}">
                                 <i class="las la-comment-dots"></i>
                                 <span data-key="t-testimonials">Gestion des Témoignages</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('admin.orders.index') }}">
+                                <i class="las la-comment-dots"></i>
+                                <span data-key="t-orders">Gestion des Commandes</span>
                             </a>
                         </li>
 

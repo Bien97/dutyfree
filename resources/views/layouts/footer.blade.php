@@ -75,7 +75,7 @@
             <div class="col-lg-3 col-md-6">
                 <a class="navbar-brand" href="{{ route('home') }}">
                     <img src="{{ asset($siteInfos['logo'] ?? 'assets/images/dutyfree-logo-BRFPKRQG.png') }}"
-                        alt="{{ site_info('site_name', 'DutyFree Express') }}" height="80">
+                        alt="" height="80">
                 </a>
                 <p class="mb-4">
                     {{ $siteInfos['site_description'] ?? 'Valeur par défaut' }}
@@ -156,6 +156,13 @@
                             document.write(new Date().getFullYear());
                         </script>. All Rights Reserved.
                     </p>
+                    @auth
+                        <div class="text-center mt-2">
+                            <a href="{{ route('dashboard') }}" class="btn btn-primary btn-sm text-white">
+                                Accéder au panel admin
+                            </a>
+                        </div>
+                    @endauth
                 </div>
 
                 {{-- <div class="col-12 text-center">

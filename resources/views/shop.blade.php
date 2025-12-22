@@ -47,12 +47,19 @@
            
             <div class="col-lg-12 text-center text-lg-start">
                 <div class="row g-3 mt-3 mt-lg-0 justify-content-between align-items-center">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <input type="text" class="form-control" id="search-input" placeholder="Rechercher un produit...">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select class="form-select" id="category-select">
                             <option value="">Toutes les catégories</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="currency-select">
+                            <option value="XOF">FCFA (XOF)</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
                         </select>
                     </div>
                     <div class="col-md-2 d-flex">
@@ -83,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('product-list');
     const searchInput = document.getElementById('search-input');
     const categorySelect = document.getElementById('category-select');
+    const currencySelect = document.getElementById('currency-select');
     const resetBtn = document.getElementById('reset-filters');
 
     const params = new URLSearchParams(window.location.search);
@@ -117,8 +125,24 @@ document.addEventListener('DOMContentLoaded', () => {
     resetBtn.addEventListener('click', () => {
         searchInput.value = '';
         categorySelect.value = '';
+        TARGET_CURRENCY = 'XOF';
+        localStorage.setItem('currency', TARGET_CURRENCY);
+        currencySelect.value = TARGET_CURRENCY;
         updateQueryParams('', '');
         loadProducts(null, '');
+    });
+    currencySelect.addEventListener('change', () => {
+        TARGET_CURRENCY = currencySelect.value;
+        localStorage.setItem('currency', TARGET_CURRENCY);
+        loadProducts(categorySelect.value || null, searchInput.value.trim());
+    });
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'currency') {
+            TARGET_CURRENCY = localStorage.getItem('currency') || TARGET_CURRENCY;
+            currencySelect.value = TARGET_CURRENCY;
+            loadProducts(categorySelect.value || null, searchInput.value.trim());
+        }
     });
 
     async function loadProducts(categoryId, query) {
@@ -147,6 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             container.innerHTML = products.map(p => renderProductCard(p)).join('');
+
+            attachAddToCart();
         } catch (e) {
             container.innerHTML = `<div class="col-12 text-center text-danger py-5">Erreur: ${e.message}</div>`;
         }
@@ -185,6 +211,82 @@ document.addEventListener('DOMContentLoaded', () => {
         window.history.replaceState({}, '', newUrl);
     }
 
+    const EU_COUNTRIES = ["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"];
+    const XOF_COUNTRIES = ["BJ","BF","CI","GW","ML","NE","SN","TG"];
+    const XAF_COUNTRIES = ["CM","CF","CG","GA","GQ","TD"];
+
+    function detectCurrency() {
+        const loc = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+        const region = (loc.split("-")[1] || "").toUpperCase();
+        if (EU_COUNTRIES.includes(region)) return "EUR";
+        if (region === "US") return "USD";
+        if (XOF_COUNTRIES.includes(region) || XAF_COUNTRIES.includes(region)) return "XOF";
+        return "XOF";
+    }
+
+    function convertFromXOF(value, target) {
+        const amount = Number(value) || 0;
+        if (target === "EUR") return amount / 655.957;
+        if (target === "USD") return amount / 610;
+        return amount;
+    }
+
+    function formatCurrency(value, code) {
+        const locale = (navigator.languages && navigator.languages[0]) || navigator.language || "fr-FR";
+        try {
+            return new Intl.NumberFormat(locale, { style: "currency", currency: code, maximumFractionDigits: 2 }).format(value);
+        } catch {
+            return `${value.toFixed(2)} ${code}`;
+        }
+    }
+
+    let TARGET_CURRENCY = (localStorage.getItem('currency') || detectCurrency());
+    currencySelect.value = TARGET_CURRENCY;
+
+    function formatProductPrice(value) {
+        const converted = convertFromXOF(value, TARGET_CURRENCY);
+        return formatCurrency(converted, TARGET_CURRENCY);
+    }
+
+    const CART_KEY = 'df_cart';
+
+    function getCart() {
+        try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; }
+    }
+
+    function saveCart(items) {
+        localStorage.setItem(CART_KEY, JSON.stringify(items));
+    }
+
+    function addToCart(product) {
+        const cart = getCart();
+        const idx = cart.findIndex(i => i.product_id === product.product_id);
+        if (idx >= 0) {
+            cart[idx].quantity += product.quantity;
+        } else {
+            cart.push(product);
+        }
+        saveCart(cart);
+        if (window.dfUpdateCartBadge) window.dfUpdateCartBadge();
+    }
+
+    function attachAddToCart() {
+        document.querySelectorAll('.product-item').forEach(el => {
+            el.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                const d = el.dataset;
+                addToCart({
+                    product_id: Number(d.id),
+                    name: d.name || '',
+                    price: Number(d.price) || 0,
+                    image: d.image || '',
+                    quantity: 1
+                });
+                window.location = '{{ route('cart') }}';
+            });
+        });
+    }
+
     function renderProductCard(p) {
         // Fallback image si non défini
         const defaultImage = '{{ asset('assets/images/product-3.png') }}';
@@ -192,10 +294,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return `
             <div class="col-12 col-md-4 col-lg-3 mb-5">
-                <a class="product-item" href="{{ route('cart') }}">
+                <a class="product-item" href="{{ route('cart') }}" data-id="${p.id}" data-name="${escapeHtml(p.name || '')}" data-price="${p.price}" data-image="${imgSrc}">
                     <img src="${imgSrc}" class="img-fluid product-thumbnail" alt="${escapeHtml(p.name || 'Produit')}">
                     <h3 class="product-title">${escapeHtml(p.name || '')}</h3>
-                    <strong class="product-price">${formatPrice(p.price)}F CFA</strong>
+                    <strong class="product-price">${formatProductPrice(p.price)}</strong>
                     <span class="icon-cross">
                         <img src="{{ asset('assets/images/cross.svg') }}" class="img-fluid" alt="Add to cart">
                     </span>

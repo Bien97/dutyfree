@@ -4,7 +4,7 @@
     <div class="container">
         <a class="navbar-brand" href="{{ route('home') }}">
             <img src="{{ asset($siteInfos['logo'] ?? 'assets/images/dutyfree-logo-BRFPKRQG.png') }}"
-                alt="{{ site_info('site_name', 'DutyFree Express') }}" height="80">
+                alt="" height="80">
         </a>
 
 
@@ -71,9 +71,10 @@
                         <img src="{{ asset('assets/images/user.svg') }}" alt="User">
                     </a>
                 </li> --}}
-                <li>
+                <li class="position-relative">
                     <a class="nav-link" href="{{ url('cart') }}">
                         <img src="{{ asset('assets/images/cart.svg') }}" alt="Cart">
+                        <span id="cart-badge" class="cart-badge">0</span>
                     </a>
                 </li>
             </ul>
@@ -220,6 +221,23 @@
         transform: scale(1.1);
     }
 
+    .cart-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(40%, -40%);
+        background: #f9bf29;
+        color: #000000;
+        border-radius: 9999px;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 1;
+        padding: 2px 6px;
+        display: none;
+        min-width: 18px;
+        text-align: center;
+    }
+
     /* Mobile */
     @media (max-width: 991px) {
         .navbar-collapse {
@@ -239,8 +257,11 @@
 
 
 <script>
-    // Header disparaît quand on scroll vers le bas
     let lastScrollTop = 0;
+    function getCart() { try { return JSON.parse(localStorage.getItem('df_cart') || '[]'); } catch { return []; } }
+    function cartCount() { return getCart().reduce((s, i) => s + (Number(i.quantity) || 0), 0); }
+    function updateCartBadge() { var el = document.getElementById('cart-badge'); if (!el) return; var c = cartCount(); el.textContent = String(c); el.style.display = c > 0 ? 'inline-block' : 'none'; }
+    window.dfUpdateCartBadge = updateCartBadge;
 
     window.addEventListener('scroll', function() {
         const navbar = document.querySelector('.custom-navbar');
@@ -257,12 +278,14 @@
         lastScrollTop = scrollTop;
     });
 
-    // Au chargement de la page
     document.addEventListener('DOMContentLoaded', function() {
         const navbar = document.querySelector('.custom-navbar');
 
         if (window.scrollY > 100) {
             navbar.classList.add('scrolled');
         }
+        updateCartBadge();
     });
+
+    window.addEventListener('storage', function(e) { if (e.key === 'df_cart') updateCartBadge(); });
 </script>

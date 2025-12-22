@@ -81,7 +81,6 @@
                                                                         Actions
                                                                     </button>
                                                                     <ul class="dropdown-menu dropdown-menu-end">
-                                                                        <li><a class="dropdown-item" href="{{ route('admin.categories.show', $category->id) }}">Voir</a></li>
                                                                         <li><a class="dropdown-item" href="{{ route('admin.categories.edit', $category->id) }}">Modifier</a></li>
                                                                         <li>
                                                                             <form

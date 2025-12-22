@@ -7,6 +7,8 @@ use App\Models\order;
 use App\Models\orderItem;
 use App\Models\product;
 use Exception;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -69,7 +71,7 @@ class OrderController extends Controller
                 'customer_address' => $request->customer_address,
                 'notes' => $request->notes,
                 'total' => $total,
-                'status' => 'pending',
+                'status' => 'confirmed',
             ]);
 
             foreach ($items as $item) {
@@ -88,6 +90,24 @@ class OrderController extends Controller
             }
 
             DB::commit();
+
+            try {
+                if ($order->customer_email) {
+                    $emailItems = [];
+                    foreach ($items as $it) {
+                        $prod = Product::find($it['product_id']);
+                        if ($prod) {
+                            $emailItems[] = [
+                                'name' => $prod->name,
+                                'quantity' => $it['quantity'],
+                                'unit_price' => $prod->price,
+                                'sub_total' => $prod->price * $it['quantity'],
+                            ];
+                        }
+                    }
+                    Mail::to($order->customer_email)->send(new OrderConfirmation($order, $emailItems));
+                }
+            } catch (Exception $mailEx) {}
 
             return response()->json([
                 'success' => true,

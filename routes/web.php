@@ -68,6 +68,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('testimonials', TestimonialController::class);
+    Route::get('orders', [\App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+    Route::put('orders/{id}/status', [\App\Http\Controllers\Admin\OrderController::class, 'updateStatus'])->name('orders.update-status');
     
     // Site Infos - Routes personnalisées
     Route::controller(SiteInfoController::class)->prefix('site-infos')->name('site-infos.')->group(function () {
