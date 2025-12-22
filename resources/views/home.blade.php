@@ -187,12 +187,19 @@
                         Qualité authentique, prix Duty Free et retrait rapide à l'aéroport.
                     </p>
                     <p><a href="{{ route('shop') }}" class="btn btn-explorer">Explorer</a></p>
+                    <div class="mt-3">
+                        <select class="form-select" id="currency-select-home">
+                            <option value="XOF">FCFA (XOF)</option>
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                    </div>
                 </div>
                 <!-- End Column 1 -->
 
                 @foreach ($products as $product)
                     <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="{{ route('cart') }}">
+                        <a class="product-item" href="{{ route('cart') }}" data-id="{{ $product->id }}" data-name="{{ $product->name }}" data-price="{{ $product->price }}" data-image="{{ asset($product->image_path) }}">
                             <img src="{{ asset($product->image_path) }}" class="img-fluid product-thumbnail"
                                 alt="{{ $product->name }}">
                             <h3 class="product-title">{{ $product->name }}</h3>
@@ -208,6 +215,96 @@
         </div>
     </div>
     <!-- End Product Section -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const EU_COUNTRIES = ["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"];
+            const XOF_COUNTRIES = ["BJ","BF","CI","GW","ML","NE","SN","TG"];
+            const XAF_COUNTRIES = ["CM","CF","CG","GA","GQ","TD"];
+
+            function detectCurrency() {
+                const loc = (navigator.languages && navigator.languages[0]) || navigator.language || "";
+                const region = (loc.split("-")[1] || "").toUpperCase();
+                if (EU_COUNTRIES.includes(region)) return "EUR";
+                if (region === "US") return "USD";
+                if (XOF_COUNTRIES.includes(region) || XAF_COUNTRIES.includes(region)) return "XOF";
+                return "XOF";
+            }
+
+            function convertFromXOF(value, target) {
+                const amount = Number(value) || 0;
+                if (target === "EUR") return amount / 655.957;
+                if (target === "USD") return amount / 610;
+                return amount;
+            }
+
+            function formatCurrency(value, code) {
+                const locale = (navigator.languages && navigator.languages[0]) || navigator.language || "fr-FR";
+                try {
+                    return new Intl.NumberFormat(locale, { style: "currency", currency: code, maximumFractionDigits: 2 }).format(value);
+                } catch {
+                    return `${value.toFixed(2)} ${code}`;
+                }
+            }
+
+            let TARGET_CURRENCY = localStorage.getItem('currency') || detectCurrency();
+            const currencySelect = document.getElementById('currency-select-home');
+            if (currencySelect) currencySelect.value = TARGET_CURRENCY;
+
+            function formatProductPrice(value) {
+                const converted = convertFromXOF(value, TARGET_CURRENCY);
+                return formatCurrency(converted, TARGET_CURRENCY);
+            }
+
+            const CART_KEY = 'df_cart';
+            function getCart() { try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; } }
+            function saveCart(items) { localStorage.setItem(CART_KEY, JSON.stringify(items)); }
+            function addToCart(product) {
+                const cart = getCart();
+                const idx = cart.findIndex(i => i.product_id === product.product_id);
+                if (idx >= 0) { cart[idx].quantity += product.quantity; } else { cart.push(product); }
+                saveCart(cart);
+                if (window.dfUpdateCartBadge) window.dfUpdateCartBadge();
+            }
+
+            function attachAddToCart() {
+                document.querySelectorAll('.product-item').forEach(el => {
+                    el.addEventListener('click', (ev) => {
+                        ev.preventDefault();
+                        const d = el.dataset;
+                        addToCart({ product_id: Number(d.id), name: d.name || '', price: Number(d.price) || 0, image: d.image || '', quantity: 1 });
+                        window.location = '{{ route('cart') }}';
+                    });
+                });
+            }
+
+            function updateHomePrices() {
+                document.querySelectorAll('.product-item').forEach(el => {
+                    const p = Number(el.dataset.price) || 0;
+                    const priceEl = el.querySelector('.product-price');
+                    if (priceEl) priceEl.textContent = formatProductPrice(p);
+                });
+            }
+
+            if (currencySelect) {
+                currencySelect.addEventListener('change', () => {
+                    TARGET_CURRENCY = currencySelect.value;
+                    localStorage.setItem('currency', TARGET_CURRENCY);
+                    updateHomePrices();
+                });
+            }
+
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'currency') {
+                    TARGET_CURRENCY = localStorage.getItem('currency') || TARGET_CURRENCY;
+                    if (currencySelect) currencySelect.value = TARGET_CURRENCY;
+                    updateHomePrices();
+                }
+            });
+
+            updateHomePrices();
+            attachAddToCart();
+        });
+    </script>
 
     <!-- Start Why Choose Us Section -->
     <div class="why-choose-section">
