@@ -233,7 +233,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{ route('admin.orders.index') }}">
-                                <i class="las la-comment-dots"></i>
+                                <i class="las la-box"></i>
                                 <span data-key="t-orders">Gestion des Commandes</span>
                             </a>
                         </li>
@@ -1486,6 +1486,10 @@
 
 
 
+
+        
+
+
         <footer class="footer">
             <div class="container-fluid">
                 <div class="row">
@@ -1504,7 +1508,7 @@
         </footer>
     </div>
     <!-- end main content-->
-
+    
     </div>
     <!-- END layout-wrapper -->
 
@@ -1514,10 +1518,12 @@
 
     <div class="py-2">
         @yield('content')
+        
     </div>
 
 
 
+    
     <!-- JAVASCRIPT -->
     <script src="{{ asset('admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/simplebar/simplebar.min.js') }}"></script>

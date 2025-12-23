@@ -84,9 +84,10 @@
             </table>
         </div>
 
-        @if ($orders->hasPages())
-            <div class="card-footer">
-                {{ $orders->links() }}
+        @php($isPaginator = $orders instanceof \Illuminate\Pagination\AbstractPaginator)
+        @if ($isPaginator && $orders->hasPages())
+            <div class="card-footer d-flex justify-content-end">
+                {{ $orders->onEachSide(1)->links() }}
             </div>
         @endif
     </div>
