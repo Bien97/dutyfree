@@ -72,11 +72,13 @@
                         <div class="form-group">
                             <label for="c_country_search" class="text-black">Pays <span class="text-danger">*</span></label>
                             <div class="position-relative">
-                                <input type="text" id="c_country_search" class="form-control" placeholder="Rechercher un pays...">
+                                <input type="text" id="c_country_search" class="form-control"
+                                    placeholder="Rechercher un pays...">
                                 <select id="c_country" class="form-control mt-2" style="display:none">
                                     <option value="">Sélectionnez un pays</option>
                                 </select>
-                                <div id="country-results" class="list-group position-absolute w-100" style="max-height: 240px; overflow: auto; z-index: 1050; display: none;"></div>
+                                <div id="country-results" class="list-group position-absolute w-100"
+                                    style="max-height: 240px; overflow: auto; z-index: 1050; display: none;"></div>
                             </div>
                         </div>
 
@@ -133,10 +135,13 @@
 
                         <div class="form-group mt-3">
                             <label class="text-black d-flex align-items-center">
-                                <input type="checkbox" id="livraison_domicile" class="mr-2">
+                                <input type="checkbox" id="livraison_domicile" class="mr-2"
+                                    style="transform: scale(1.6); margin-right: 10px;">
                                 Se faire livrer à domicile ?
                             </label>
                         </div>
+
+
 
                         <!-- Section qui apparaît si on coche -->
                         <div id="bloc_livraison" class="p-3 border bg-light mt-3" style="display: none;">
@@ -194,9 +199,11 @@
     </div>
 
     <script>
-        const EU_COUNTRIES = ["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE"];
-        const XOF_COUNTRIES = ["BJ","BF","CI","GW","ML","NE","SN","TG"];
-        const XAF_COUNTRIES = ["CM","CF","CG","GA","GQ","TD"];
+        const EU_COUNTRIES = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT",
+            "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"
+        ];
+        const XOF_COUNTRIES = ["BJ", "BF", "CI", "GW", "ML", "NE", "SN", "TG"];
+        const XAF_COUNTRIES = ["CM", "CF", "CG", "GA", "GQ", "TD"];
 
         function detectCurrency() {
             const loc = (navigator.languages && navigator.languages[0]) || navigator.language || "";
@@ -216,26 +223,50 @@
 
         function formatCurrency(value, code) {
             const locale = (navigator.languages && navigator.languages[0]) || navigator.language || "fr-FR";
-            try { return new Intl.NumberFormat(locale, { style: "currency", currency: code, maximumFractionDigits: 2 }).format(value); } catch { return `${value.toFixed(2)} ${code}`; }
+            try {
+                return new Intl.NumberFormat(locale, {
+                    style: "currency",
+                    currency: code,
+                    maximumFractionDigits: 2
+                }).format(value);
+            } catch {
+                return `${value.toFixed(2)} ${code}`;
+            }
         }
 
-        function getSelectedCurrency() { return localStorage.getItem('currency') || detectCurrency(); }
+        function getSelectedCurrency() {
+            return localStorage.getItem('currency') || detectCurrency();
+        }
         let TARGET_CURRENCY = getSelectedCurrency();
         const CART_KEY = 'df_cart';
-        function getCart() { try { return JSON.parse(localStorage.getItem(CART_KEY) || '[]'); } catch { return []; } }
-        function clearCart() { localStorage.removeItem(CART_KEY); }
+
+        function getCart() {
+            try {
+                return JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function clearCart() {
+            localStorage.removeItem(CART_KEY);
+        }
 
         function renderOrderSummary() {
             const body = document.getElementById('order-body');
             const items = getCart();
-            if (!items.length) { body.innerHTML = '<tr><td colspan="2" class="text-center py-5">Votre panier est vide</td></tr>'; return; }
+            if (!items.length) {
+                body.innerHTML = '<tr><td colspan="2" class="text-center py-5">Votre panier est vide</td></tr>';
+                return;
+            }
             let totalXOF = 0;
             body.innerHTML = items.map(i => {
-                const lineXOF = i.price * i.quantity;
-                totalXOF += lineXOF;
-                const lineFormatted = formatCurrency(convertFromXOF(lineXOF, TARGET_CURRENCY), TARGET_CURRENCY);
-                return `<tr><td>${i.name} × ${i.quantity}</td><td>${lineFormatted}</td></tr>`;
-            }).join('') + `<tr><td class="text-black font-weight-bold">Montant total de la commande</td><td class="text-black font-weight-bold">${formatCurrency(convertFromXOF(totalXOF, TARGET_CURRENCY), TARGET_CURRENCY)}</td></tr>`;
+                    const lineXOF = i.price * i.quantity;
+                    totalXOF += lineXOF;
+                    const lineFormatted = formatCurrency(convertFromXOF(lineXOF, TARGET_CURRENCY), TARGET_CURRENCY);
+                    return `<tr><td>${i.name} × ${i.quantity}</td><td>${lineFormatted}</td></tr>`;
+                }).join('') +
+                `<tr><td class="text-black font-weight-bold">Montant total de la commande</td><td class="text-black font-weight-bold">${formatCurrency(convertFromXOF(totalXOF, TARGET_CURRENCY), TARGET_CURRENCY)}</td></tr>`;
         }
 
         function validateFields() {
@@ -251,10 +282,20 @@
             const btn = document.getElementById('place-order');
             if (btn && btn.disabled) return;
             let originalText = btn ? btn.textContent : '';
-            if (btn) { btn.disabled = true; btn.textContent = 'Validation...'; btn.setAttribute('aria-busy', 'true'); }
+            if (btn) {
+                btn.disabled = true;
+                btn.textContent = 'Validation...';
+                btn.setAttribute('aria-busy', 'true');
+            }
             const items = getCart();
-            if (!items.length) { alert('Votre panier est vide'); return; }
-            if (!validateFields()) { alert('Veuillez remplir les champs requis'); return; }
+            if (!items.length) {
+                alert('Votre panier est vide');
+                return;
+            }
+            if (!validateFields()) {
+                alert('Veuillez remplir les champs requis');
+                return;
+            }
 
             const fname = document.getElementById('c_fname').value.trim();
             const lname = document.getElementById('c_lname').value.trim();
@@ -271,27 +312,45 @@
                 customer_email: email || null,
                 customer_address: address,
                 notes: livraison ? `Ville: ${ville}; Quartier: ${quartier}` : '',
-                items: items.map(i => ({ product_id: i.product_id, quantity: i.quantity }))
+                items: items.map(i => ({
+                    product_id: i.product_id,
+                    quantity: i.quantity
+                }))
             };
 
             try {
                 const res = await fetch('/api/v1/orders', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
                     body: JSON.stringify(payload)
                 });
                 const json = await res.json();
-                if (!json.success) { alert(json.message || 'Erreur de validation'); if (btn) { btn.disabled = false; btn.textContent = originalText; btn.removeAttribute('aria-busy'); } return; }
+                if (!json.success) {
+                    alert(json.message || 'Erreur de validation');
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.textContent = originalText;
+                        btn.removeAttribute('aria-busy');
+                    }
+                    return;
+                }
                 clearCart();
                 alert('Commande enregistrée avec succès');
                 window.location = '{{ route('shop') }}';
             } catch (e) {
                 alert('Erreur lors de l\'enregistrement de la commande');
-                if (btn) { btn.disabled = false; btn.textContent = originalText; btn.removeAttribute('aria-busy'); }
+                if (btn) {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                    btn.removeAttribute('aria-busy');
+                }
             }
         }
 
-        document.getElementById('livraison_domicile').addEventListener('change', function () {
+        document.getElementById('livraison_domicile').addEventListener('change', function() {
             document.getElementById('bloc_livraison').style.display = this.checked ? 'block' : 'none';
         });
 
@@ -305,74 +364,215 @@
             const region = (locale.split('-')[1] || '').toUpperCase();
             try {
                 if (Intl.DisplayNames && Intl.supportedValuesOf) {
-                    const dn = new Intl.DisplayNames([locale], { type: 'region' });
+                    const dn = new Intl.DisplayNames([locale], {
+                        type: 'region'
+                    });
                     const codes = Intl.supportedValuesOf('region').filter(c => /^[A-Z]{2}$/.test(c));
-                    const arr = codes.map(c => ({ code: c, name: dn.of(c) })).filter(x => x.name);
-                    arr.sort((a,b) => a.name.localeCompare(b.name));
-                    const opts = ['<option value="">Sélectionnez un pays</option>'].concat(arr.map(x => `<option value="${x.code}">${x.name}</option>`));
+                    const arr = codes.map(c => ({
+                        code: c,
+                        name: dn.of(c)
+                    })).filter(x => x.name);
+                    arr.sort((a, b) => a.name.localeCompare(b.name));
+                    const opts = ['<option value="">Sélectionnez un pays</option>'].concat(arr.map(x =>
+                        `<option value="${x.code}">${x.name}</option>`));
                     sel.innerHTML = opts.join('');
                     COUNTRY_LIST = arr;
                     if (codes.includes(region)) sel.value = region;
                     const selected = COUNTRY_LIST.find(x => x.code === sel.value);
-                    if (selected) search.value = selected.name; else search.value = '';
+                    if (selected) search.value = selected.name;
+                    else search.value = '';
                 } else {
                     throw new Error('intl unsupported');
                 }
             } catch (e) {
-                fetch('https://unpkg.com/world-countries/countries.json', { headers: { 'Accept': 'application/json' } })
+                fetch('https://unpkg.com/world-countries/countries.json', {
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
                     .then(r => r.json())
                     .then(data => {
                         const arr = Array.isArray(data) ? data.map(c => {
                             const code = c.cca2 || '';
-                            const name = (c.translations && c.translations.fra && c.translations.fra.common) || (c.name && c.name.common) || '';
-                            return { code, name };
+                            const name = (c.translations && c.translations.fra && c.translations.fra
+                                .common) || (c.name && c.name.common) || '';
+                            return {
+                                code,
+                                name
+                            };
                         }).filter(x => /^[A-Z]{2}$/.test(x.code) && x.name) : [];
-                        arr.sort((a,b) => a.name.localeCompare(b.name));
-                        const opts = ['<option value="">Sélectionnez un pays</option>'].concat(arr.map(x => `<option value="${x.code}">${x.name}</option>`));
+                        arr.sort((a, b) => a.name.localeCompare(b.name));
+                        const opts = ['<option value="">Sélectionnez un pays</option>'].concat(arr.map(x =>
+                            `<option value="${x.code}">${x.name}</option>`));
                         sel.innerHTML = opts.join('');
                         COUNTRY_LIST = arr;
                         const codes = arr.map(x => x.code);
                         if (codes.includes(region)) sel.value = region;
                         const selected = COUNTRY_LIST.find(x => x.code === sel.value);
-                        if (selected) search.value = selected.name; else search.value = '';
+                        if (selected) search.value = selected.name;
+                        else search.value = '';
                     })
                     .catch(() => {
-                        const arr = [
-                            {code:'FR',name:'France'},{code:'US',name:'États-Unis'},{code:'GB',name:'Royaume-Uni'},{code:'DE',name:'Allemagne'},{code:'IT',name:'Italie'},{code:'ES',name:'Espagne'},{code:'CA',name:'Canada'},{code:'CN',name:'Chine'},{code:'JP',name:'Japon'},{code:'BR',name:'Brésil'},{code:'IN',name:'Inde'},{code:'NG',name:'Nigéria'},{code:'ZA',name:'Afrique du Sud'},{code:'RU',name:'Russie'},{code:'AU',name:'Australie'},{code:'SE',name:'Suède'},{code:'NL',name:'Pays-Bas'},{code:'BE',name:'Belgique'},{code:'CH',name:'Suisse'},{code:'AT',name:'Autriche'},{code:'CI',name:'Côte d’Ivoire'},{code:'SN',name:'Sénégal'},{code:'CM',name:'Cameroun'},{code:'TD',name:'Tchad'},{code:'TG',name:'Togo'},{code:'ML',name:'Mali'},{code:'BF',name:'Burkina Faso'},{code:'BJ',name:'Bénin'},{code:'NE',name:'Niger'},{code:'GW',name:'Guinée‑Bissau'},{code:'GA',name:'Gabon'},{code:'GQ',name:'Guinée équatoriale'},{code:'CF',name:'République centrafricaine'},{code:'CG',name:'Congo'}
-                        ];
-                        const opts = ['<option value="">Sélectionnez un pays</option>'].concat(arr.map(x => `<option value="${x.code}">${x.name}</option>`));
+                        const arr = [{
+                            code: 'FR',
+                            name: 'France'
+                        }, {
+                            code: 'US',
+                            name: 'États-Unis'
+                        }, {
+                            code: 'GB',
+                            name: 'Royaume-Uni'
+                        }, {
+                            code: 'DE',
+                            name: 'Allemagne'
+                        }, {
+                            code: 'IT',
+                            name: 'Italie'
+                        }, {
+                            code: 'ES',
+                            name: 'Espagne'
+                        }, {
+                            code: 'CA',
+                            name: 'Canada'
+                        }, {
+                            code: 'CN',
+                            name: 'Chine'
+                        }, {
+                            code: 'JP',
+                            name: 'Japon'
+                        }, {
+                            code: 'BR',
+                            name: 'Brésil'
+                        }, {
+                            code: 'IN',
+                            name: 'Inde'
+                        }, {
+                            code: 'NG',
+                            name: 'Nigéria'
+                        }, {
+                            code: 'ZA',
+                            name: 'Afrique du Sud'
+                        }, {
+                            code: 'RU',
+                            name: 'Russie'
+                        }, {
+                            code: 'AU',
+                            name: 'Australie'
+                        }, {
+                            code: 'SE',
+                            name: 'Suède'
+                        }, {
+                            code: 'NL',
+                            name: 'Pays-Bas'
+                        }, {
+                            code: 'BE',
+                            name: 'Belgique'
+                        }, {
+                            code: 'CH',
+                            name: 'Suisse'
+                        }, {
+                            code: 'AT',
+                            name: 'Autriche'
+                        }, {
+                            code: 'CI',
+                            name: 'Côte d’Ivoire'
+                        }, {
+                            code: 'SN',
+                            name: 'Sénégal'
+                        }, {
+                            code: 'CM',
+                            name: 'Cameroun'
+                        }, {
+                            code: 'TD',
+                            name: 'Tchad'
+                        }, {
+                            code: 'TG',
+                            name: 'Togo'
+                        }, {
+                            code: 'ML',
+                            name: 'Mali'
+                        }, {
+                            code: 'BF',
+                            name: 'Burkina Faso'
+                        }, {
+                            code: 'BJ',
+                            name: 'Bénin'
+                        }, {
+                            code: 'NE',
+                            name: 'Niger'
+                        }, {
+                            code: 'GW',
+                            name: 'Guinée‑Bissau'
+                        }, {
+                            code: 'GA',
+                            name: 'Gabon'
+                        }, {
+                            code: 'GQ',
+                            name: 'Guinée équatoriale'
+                        }, {
+                            code: 'CF',
+                            name: 'République centrafricaine'
+                        }, {
+                            code: 'CG',
+                            name: 'Congo'
+                        }];
+                        const opts = ['<option value="">Sélectionnez un pays</option>'].concat(arr.map(x =>
+                            `<option value="${x.code}">${x.name}</option>`));
                         sel.innerHTML = opts.join('');
                         COUNTRY_LIST = arr;
                         const codes = arr.map(x => x.code);
                         if (codes.includes(region)) sel.value = region;
                         const selected = COUNTRY_LIST.find(x => x.code === sel.value);
-                        if (selected) search.value = selected.name; else search.value = '';
+                        if (selected) search.value = selected.name;
+                        else search.value = '';
                     });
             }
 
             function renderCountryResults(q) {
                 const term = (q || '').toLowerCase();
                 const data = COUNTRY_LIST.filter(x => x.name.toLowerCase().includes(term)).slice(0, 50);
-                if (!data.length) { results.style.display = 'none'; results.innerHTML = ''; return; }
-                results.innerHTML = data.map(x => `<a href="#" class="list-group-item list-group-item-action" data-code="${x.code}">${x.name}</a>`).join('');
+                if (!data.length) {
+                    results.style.display = 'none';
+                    results.innerHTML = '';
+                    return;
+                }
+                results.innerHTML = data.map(x =>
+                    `<a href="#" class="list-group-item list-group-item-action" data-code="${x.code}">${x.name}</a>`
+                ).join('');
                 results.style.display = 'block';
             }
 
-            search.addEventListener('input', () => { renderCountryResults(search.value); });
-            search.addEventListener('focus', () => { renderCountryResults(search.value); });
-            search.addEventListener('blur', () => { setTimeout(() => { results.style.display = 'none'; }, 150); });
+            search.addEventListener('input', () => {
+                renderCountryResults(search.value);
+            });
+            search.addEventListener('focus', () => {
+                renderCountryResults(search.value);
+            });
+            search.addEventListener('blur', () => {
+                setTimeout(() => {
+                    results.style.display = 'none';
+                }, 150);
+            });
             results.addEventListener('click', (e) => {
                 const target = e.target.closest('.list-group-item');
                 if (!target) return;
                 e.preventDefault();
                 const code = target.getAttribute('data-code');
                 const item = COUNTRY_LIST.find(x => x.code === code);
-                if (item) { sel.value = item.code; search.value = item.name; }
+                if (item) {
+                    sel.value = item.code;
+                    search.value = item.name;
+                }
                 results.style.display = 'none';
             });
         });
 
-        window.addEventListener('storage', (e) => { if (e.key === 'currency') { TARGET_CURRENCY = getSelectedCurrency(); renderOrderSummary(); } });
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'currency') {
+                TARGET_CURRENCY = getSelectedCurrency();
+                renderOrderSummary();
+            }
+        });
     </script>
 
     <style>
@@ -399,4 +599,4 @@
         document.getElementById("bloc_livraison").style.display = this.checked ? "block" : "none";
     });
 </script> --}}
-        {{-- let COUNTRY_LIST = []; --}}
+{{-- let COUNTRY_LIST = []; --}}
