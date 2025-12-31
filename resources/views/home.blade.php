@@ -266,13 +266,47 @@
                 if (window.dfUpdateCartBadge) window.dfUpdateCartBadge();
             }
 
-            function attachAddToCart() {
+            function attachProductClick() {
                 document.querySelectorAll('.product-item').forEach(el => {
-                    el.addEventListener('click', (ev) => {
+                    el.addEventListener('click', async (ev) => {
                         ev.preventDefault();
-                        const d = el.dataset;
-                        addToCart({ product_id: Number(d.id), name: d.name || '', price: Number(d.price) || 0, image: d.image || '', quantity: 1 });
-                        window.location = '{{ route('cart') }}';
+                        const id = Number(el.dataset.id);
+                        const modalEl = document.getElementById('productModal');
+                        const titleEl = modalEl.querySelector('.modal-title');
+                        const imgEl = modalEl.querySelector('#pm-image');
+                        const descEl = modalEl.querySelector('#pm-desc');
+                        const priceEl = modalEl.querySelector('#pm-price');
+                        const qtyEl = modalEl.querySelector('#pm-qty');
+                        const addBtn = modalEl.querySelector('#pm-add');
+                        titleEl.textContent = 'Chargement…';
+                        imgEl.src = '';
+                        descEl.textContent = '';
+                        priceEl.textContent = '';
+                        qtyEl.value = 1;
+                        addBtn.disabled = true;
+                        const modal = new bootstrap.Modal(modalEl);
+                        modal.show();
+                        try {
+                            const res = await fetch(`/api/v1/products/${id}`, { headers: { 'Accept': 'application/json' } });
+                            const json = await res.json();
+                            if (!json.success || !json.data) throw new Error('Produit introuvable');
+                            const p = json.data;
+                            titleEl.textContent = p.name || 'Produit';
+                            const imgSrc = (p.image_path && typeof p.image_path === 'string') ? p.image_path : '{{ asset('assets/images/product-3.png') }}';
+                            imgEl.src = imgSrc;
+                            descEl.textContent = p.description || '';
+                            priceEl.textContent = formatProductPrice(p.price);
+                            qtyEl.max = Math.max(1, Number(p.stock) || 1);
+                            addBtn.disabled = !(Number(p.stock) > 0);
+                            addBtn.onclick = () => {
+                                const q = Math.max(1, Math.min(Number(qtyEl.value) || 1, Number(qtyEl.max) || 1));
+                                addToCart({ product_id: Number(p.id), name: p.name || '', price: Number(p.price) || 0, image: imgSrc, quantity: q });
+                                modal.hide();
+                            };
+                        } catch (e) {
+                            titleEl.textContent = 'Erreur';
+                            descEl.textContent = e.message || 'Impossible de charger le produit.';
+                        }
                     });
                 });
             }
@@ -302,7 +336,7 @@
             });
 
             updateHomePrices();
-            attachAddToCart();
+            attachProductClick();
         });
     </script>
 
@@ -582,5 +616,33 @@
     </style>
 
 
+
+@push('scripts')
+<div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row g-3">
+          <div class="col-md-5">
+            <img id="pm-image" src="" alt="" class="img-fluid" style="width:100%;height:260px;object-fit:contain;background:#fff;">
+          </div>
+          <div class="col-md-7">
+            <p id="pm-desc" class="mb-3"></p>
+            <div class="d-flex align-items-center mb-3">
+              <strong id="pm-price" class="fs-5 me-3"></strong>
+              <input id="pm-qty" type="number" class="form-control" value="1" min="1" style="width:100px;">
+            </div>
+            <button id="pm-add" class="btn btn-primary">Ajouter au panier</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endpush
 
 @endsection

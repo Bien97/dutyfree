@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\product;
-use App\Models\category;
+use App\Models\Category;
 use App\Models\Testimonial;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
